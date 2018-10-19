@@ -1,5 +1,3 @@
-package jogoDaVelha;
-
 public final class Minimax 
 {
 	private static Action bestActionForX;
