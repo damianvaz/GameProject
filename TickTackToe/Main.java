@@ -1,5 +1,3 @@
-package jogoDaVelha;
-
 import java.util.Scanner;
 
 public class Main 
@@ -35,7 +33,7 @@ public class Main
 			Action Move = Minimax.minimax(game.getBoard());
 			game.makeMove(Move.getAction()[0], Move.getAction()[1]);
 			game.getBoard().printBoard();
-			//System.out.println("Ação " + Move.getAction()[0] + Move.getAction()[1]);
+			//System.out.println("AÃ§Ã£o " + Move.getAction()[0] + Move.getAction()[1]);
 			/*
 			if(!game.getBoard().isGameOver())
 			{
