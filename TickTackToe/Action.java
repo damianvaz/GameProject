@@ -1,4 +1,3 @@
-package jogoDaVelha;
 
 public class Action 
 {
