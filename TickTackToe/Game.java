@@ -1,5 +1,3 @@
-package jogoDaVelha;
-
 import java.util.Scanner;
 
 public class Game 
