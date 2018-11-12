@@ -28,25 +28,76 @@ public class Board
 			System.out.println("|");
 		}
 	}
-	public void setBoat(Boats boat, boolean isVertical, int x, int y)
+	public void setBoat(Boats boat)
 	{
 		 int size = boat.getSpaces();
-		 if (isVertical)
+		 int row = boat.getRow();
+		 int col = boat.getCol();
+		 
+		 if (boat.getIsVertical())
 		 {
 			 for ( int i = 0; i < size; i++)
 			 {
-				 board[x][y] = boat.getboatChar();
-				 x++;
+				 board[row][col] = boat.getboatChar();
+				 row++;
 			 }
 		 }
 		 else
 		 {
 			 for ( int i = 0; i < size; i++)
 			 {
-				 board[x][y] = boat.getboatChar();
-				 y++;
+				 board[row][col] = boat.getboatChar();
+				 col++;
 			 }
 		 }				 
+	}
+	
+	public boolean isValidPlay(Boats boats)
+	{
+		int row = boats.getRow();
+		int col = boats.getCol();
+		boolean validPlay = true;
+		boolean isVertical = boats.getIsVertical();
+		int spaces = boats.getSpaces();
+		
+		
+		if(isVertical)
+		{
+			for(int i = 0; i < spaces; i++)
+			{
+				if (row < size)
+				{
+					if (board[row][col] != ' ')
+					{
+						validPlay = false;
+					}
+					row++;
+				}
+				else
+				{
+					validPlay = false;
+				}
+			}
+		}
+		else
+		{
+			for(int i = 0; i < spaces; i++)
+			{
+				if(col < size)
+				{
+					if (board[row][col] != ' ')
+					{
+						validPlay = false;
+					}
+					col++;
+				}
+				else
+				{
+					validPlay = false;
+				}
+			}
+		}
+		return validPlay;
 	}
 	
 	

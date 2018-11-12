@@ -32,21 +32,34 @@ public class Player
 	{
 		for(int i = 0; i < boats.length; i++)
 		{
-			System.out.println("Setting boat: " + boats[i].getName());
-			System.out.println("Enter number of row: ");
-			Scanner in = new Scanner(System.in);
-			int row = in.nextInt();
-			System.out.println("Enter number of Col");
-			int col = in.nextInt();
-			System.out.println("Is the boat on vertical? y/n");
-			String vertical = in.next();
-			boolean isVertical = false;
-			if (vertical.equals("y"))
+			boolean condicao = true;
+			while (condicao)
 			{
-				isVertical = true;
+				System.out.println("Setting boat: " + boats[i].getName());
+				System.out.println("Enter number of row: ");
+				Scanner in = new Scanner(System.in);
+				int row = in.nextInt();
+				System.out.println("Enter number of Col");
+				int col = in.nextInt();
+				System.out.println("Is the boat on vertical? y/n");
+				String vertical = in.next();
+				boolean isVertical = false;
+				if (vertical.equals("y"))
+				{
+					isVertical = true;
+				}
+				boats[i].setBoatVar(row, col, isVertical);
+				if (board.isValidPlay(boats[i]))
+				{
+					board.setBoat(boats[i]);
+					board.printBoard();
+					condicao = false;
+				}
+				else 
+				{
+					System.out.println("Ilegal Position, try again");
+				}
 			}
-			board.setBoat(boats[i], isVertical, row, col);
-			board.printBoard();
 		}
 	}
 }

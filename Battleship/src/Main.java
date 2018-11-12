@@ -53,6 +53,7 @@ public class Main
 		Player player1 = new Player(size);
 		
 		player1.setBoard();
+		System.out.println();
 		player1.board.printBoard();
 		
 		
