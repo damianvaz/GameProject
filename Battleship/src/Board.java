@@ -4,6 +4,8 @@ public class Board
 {
 	char[][] board;
 	int size;
+	Boats[] boats = new Boats[10];
+	
 	public Board(int size)
 	{
 		this.size = size;
@@ -50,6 +52,20 @@ public class Board
 				 col++;
 			 }
 		 }				 
+	}
+	public Boat getBoat(int x int y)
+	{
+		
+	}
+	public void setHit(int x, int y)
+	{
+		board[x][y] = '!';
+		
+	}
+	public void setMiss(int x, int y)
+	{
+		board[x][y] = 'X';
+		
 	}
 	
 	public boolean isValidPlay(Boats boats)

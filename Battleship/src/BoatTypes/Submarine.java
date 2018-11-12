@@ -7,5 +7,6 @@ public class Submarine extends Boats
 		name = "Submarine";
 		spaces = 1;
 		boatChar = 'S';
+		isHit = new boolean[spaces];
 	}
 }

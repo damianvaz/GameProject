@@ -6,5 +6,6 @@ public class Battleship extends Boats
 		name = "Battleship";
 		spaces = 4;
 		boatChar = 'B';
+		isHit = new boolean[spaces];
 	}
 }

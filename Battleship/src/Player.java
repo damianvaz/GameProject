@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 import BoatTypes.AircraftCarrier;
@@ -11,11 +12,13 @@ public class Player
 {
 	Boats[] boats = new Boats[10];
 	Board board;
-	Board enemyHitsMisses;
+	Board enemyBoard;
+	int boardSize;
 	
 	public Player(int size)
 	{
 		board = new Board(size);
+		enemyBoard = new Board(size);
 		boats[0] = new AircraftCarrier();
 		boats[1] = new Battleship();
 		boats[2] = new Battleship();
@@ -26,6 +29,7 @@ public class Player
 		boats[7] = new Submarine();
 		boats[8] = new Submarine();
 		boats[9] = new Submarine();
+		this.boardSize = size;
 	}
 	
 	public void setBoard()
@@ -62,4 +66,43 @@ public class Player
 			}
 		}
 	}
+	
+	public void setRandomBoard()
+	{
+		for (int i = 0; i < boats.length; i++)
+		{
+			boolean condicao = true;
+			while (condicao)
+			{
+				Random random = new Random();
+				
+				int x = random.nextInt(boardSize);
+				int y = random.nextInt(boardSize);
+				boolean vertical = random.nextBoolean();
+								
+				boats[i].setBoatVar(x, y,vertical);
+				if(board.isValidPlay(boats[i]))
+				{
+					board.setBoat(boats[i]);
+					//board.printBoard();
+					condicao = false;
+				}
+			}
+		}
+	}
+	
+	public Boats getBoat(int row, int col)
+	{
+		Boats boatFound = new Boats();
+		for (int i = 0; i < boats.length; i++)
+		{
+			if (boats[i].getRow() == row && boats[i].getCol() == col)
+			{
+				boatFound = boats[i];
+				break;
+			}
+		}
+		return boatFound;
+	}
+	
 }

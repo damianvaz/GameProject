@@ -7,5 +7,6 @@ public class AircraftCarrier extends Boats
 		name = "Aircraft Carrier";
 		spaces = 5;
 		boatChar = 'A';
+		isHit = new boolean[spaces];
 	}
 }
