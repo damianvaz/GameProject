@@ -96,7 +96,7 @@ public class Player
 		Boats boatFound = new Boats();
 		for (int i = 0; i < boats.length; i++)
 		{
-			if (boats[i].getRow() == row && boats[i].getCol() == col)
+			if (boats[i].isHere(row, col))
 			{
 				boatFound = boats[i];
 				break;

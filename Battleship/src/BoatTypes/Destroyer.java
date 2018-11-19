@@ -8,5 +8,6 @@ public class Destroyer extends Boats
 		spaces = 2;
 		boatChar = 'D';
 		isHit = new boolean[spaces];
+		health = spaces * 10;
 	}
 }

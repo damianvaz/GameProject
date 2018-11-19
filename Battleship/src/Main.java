@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 import BoatTypes.Boats;
@@ -5,6 +6,8 @@ import BoatTypes.Boats;
 public class Main 
 {
 	static int size = 0;
+	static boolean lastoneHit = false;
+	static boolean secondLastHit = false;
 
 	public static void menu()
 	{
@@ -57,9 +60,41 @@ public class Main
 			System.out.println("Yout hits and misses on Enemy territory");
 			player1.enemyBoard.printBoard();
 			System.out.println();
-			AIPlayer.board.printBoard();
+//			AIPlayer.board.printBoard();
 			askForCoordenates(player1.enemyBoard, AIPlayer);
-			
+			AIPlay(player1);
+		}
+	}
+	
+	public static void AIPlay(Player player)
+	{
+		Random random = new Random();
+		/*
+		if (lastoneHit)
+		{
+			// try on horizontal dimension first
+			if(!secondLastHit)
+			{
+				
+			}
+		}
+		*/
+		int row = random.nextInt(size);
+		int col = random.nextInt(size);
+		
+		//check if coordenates hit something
+		if(player.board.board[row][col] != ' ')
+		{
+			System.out.println("Enemy hit your boat!!");
+			Boats boat = player.getBoat(row, col);
+			player.board.setHit(row, col);
+			boat.setHit();
+			lastoneHit = true;
+		}
+		else
+		{
+			System.out.println("Not a hit!");
+			lastoneHit = false;
 		}
 	}
 	
@@ -78,7 +113,8 @@ public class Main
 			System.out.println("You got a hit!!");
 			seeableEnemyBoard.setHit(row, col);
 			Boats boat = AIPlayer.getBoat(row, col);
-			boat.setHit(0);
+			AIPlayer.board.setHit(row, col);
+			boat.setHit();
 		}
 		else
 		{

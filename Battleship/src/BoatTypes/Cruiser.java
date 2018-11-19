@@ -8,5 +8,6 @@ public class Cruiser extends Boats
 		spaces = 3;
 		boatChar = 'C';
 		isHit = new boolean[spaces];
+		health = spaces * 10;
 	}
 }

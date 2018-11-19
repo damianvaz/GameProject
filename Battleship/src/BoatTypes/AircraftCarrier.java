@@ -8,5 +8,6 @@ public class AircraftCarrier extends Boats
 		spaces = 5;
 		boatChar = 'A';
 		isHit = new boolean[spaces];
+		health = spaces * 10;
 	}
 }

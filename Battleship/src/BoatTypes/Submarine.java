@@ -8,5 +8,6 @@ public class Submarine extends Boats
 		spaces = 1;
 		boatChar = 'S';
 		isHit = new boolean[spaces];
+		health = spaces * 10;
 	}
 }
