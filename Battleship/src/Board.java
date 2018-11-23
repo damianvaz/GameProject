@@ -4,6 +4,7 @@ public class Board
 {
 	char[][] board;
 	int size;
+	
 	public Board(int size)
 	{
 		this.size = size;
@@ -31,8 +32,8 @@ public class Board
 	public void setBoat(Boats boat)
 	{
 		 int size = boat.getSpaces();
-		 int row = boat.getRow();
-		 int col = boat.getCol();
+		 int row = boat.getRowBegin();
+		 int col = boat.getColBegin();
 		 
 		 if (boat.getIsVertical())
 		 {
@@ -51,11 +52,21 @@ public class Board
 			 }
 		 }				 
 	}
+	public void setHit(int x, int y)
+	{
+		board[x][y] = '!';
+		
+	}
+	public void setMiss(int x, int y)
+	{
+		board[x][y] = 'X';
+		
+	}
 	
 	public boolean isValidPlay(Boats boats)
 	{
-		int row = boats.getRow();
-		int col = boats.getCol();
+		int row = boats.getRowBegin();
+		int col = boats.getColBegin();
 		boolean validPlay = true;
 		boolean isVertical = boats.getIsVertical();
 		int spaces = boats.getSpaces();

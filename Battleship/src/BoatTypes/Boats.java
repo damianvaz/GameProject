@@ -6,19 +6,61 @@ public class Boats
 	String name;
 	int spaces;
 	char boatChar;
-	int row;
-	int col;
+	int rowBegin;
+	int colBegin;
+	int rowEnd;
+	int colEnd;
 	boolean isVertical = false;
-	boolean[] isHit = new boolean[spaces];
+	boolean[] isHit;
+	boolean isSunk;
+	int health;
 	
 	
 	public void setBoatVar(int row, int col, boolean isVertical)
 	{
-		this.row = row;
-		this.col = col;
+		this.rowBegin = row;
+		this.colBegin = col;
 		this.isVertical = isVertical;
+		if (isVertical)
+		{
+			this.rowEnd = rowBegin + spaces;
+			this.colEnd = colBegin;
+		}
+		else
+		{
+			this.colEnd = colBegin + spaces;
+			this.rowEnd = rowBegin;
+		}
+		this.isSunk = false;
 	}
-	public String getName()
+	public boolean isHere(int x, int y)
+	{
+		boolean condition = false;
+		if (isVertical)
+		{
+			if (this.colBegin <= y && y <= this.colEnd )
+			{
+				condition = true;
+			}
+		}
+		else
+		{
+			if (this.rowBegin <= x && x <= this.rowEnd)
+			{
+				condition = true;
+			}
+		}
+		return condition;
+	}
+	public void setHit()
+	{
+		this.health -= 10;
+		if (health <= 0)
+		{
+			System.out.println("BOAT SUNK");
+		}
+	}
+		public String getName()
 	{
 		return name;
 	}
@@ -30,21 +72,21 @@ public class Boats
 	{
 		return boatChar;
 	}
-	public void setRow(int row)
+	public void setRowBegin(int row)
 	{
-		this.row = row;
+		this.rowBegin = row;
 	}
-	public void setCol(int col)
+	public void setColBegin(int col)
 	{
-		this.col = col;
+		this.colBegin = col;
 	}
-	public int getRow()
+	public int getRowBegin()
 	{
-		return this.row;
+		return this.rowBegin;
 	}
-	public int getCol()
+	public int getColBegin()
 	{
-		return this.col;
+		return this.colBegin;
 	}
 	public void setIsVertical(boolean b)
 	{
