@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Board 
+public class TicTacToeBoard 
 {
 	//fill board with spaces
 	private char[][] board;
@@ -8,7 +8,7 @@ public class Board
 	private char player;
 
 	
-	public Board()
+	public TicTacToeBoard()
 	{
 		board = new char[][]
 		{
@@ -18,13 +18,13 @@ public class Board
 		};
 	}
 	
-	public Board(int turn, char[][] board)
+	public TicTacToeBoard(int turn, char[][] board)
 	{
 		this.board = board;
 		this.turn = turn;
 	}
 	
-	public Board(char[][] board)
+	public TicTacToeBoard(char[][] board)
 	{
 		this.board = board;
 	}

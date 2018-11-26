@@ -5,13 +5,13 @@ public final class Minimax
 	private static Action bufferAction;
 	private static int max = -10;
 	private static int min = 10;
-	private static Board bufferBoard;
+	private static TicTacToeBoard bufferBoard;
 	
 	private Minimax()
 	{
 		// do not instantiate
 	}
-	public static Action minimax(Board board) 
+	public static Action minimax(TicTacToeBoard board) 
 	{
 		maxValue(board);
 		//return bestActionForO;
@@ -27,7 +27,7 @@ public final class Minimax
 		//max = -10;
 		//min = 10;
 	}
-	public static int maxValue(Board board)
+	public static int maxValue(TicTacToeBoard board)
 	{
 		// if its a terminal state
 		if(board.isGameOver())
@@ -61,7 +61,7 @@ public final class Minimax
 					bb[j][k] = board.getArrayBoard()[j][k];
 				}
 			}
-			Board possibleBoard = new Board(board.getTurn(), bb);
+			TicTacToeBoard possibleBoard = new TicTacToeBoard(board.getTurn(), bb);
 			bufferBoard = possibleBoard;
 			System.out.println(board.getTurn());
 			possibleBoard.setBoard('O', actions[i].getAction()[0], actions[i].getAction()[1]);
@@ -91,7 +91,7 @@ public final class Minimax
 		return max;
 	}
 	
-	public static int minValue(Board board)
+	public static int minValue(TicTacToeBoard board)
 	{
 		if(board.isGameOver())
 		{
@@ -124,7 +124,7 @@ public final class Minimax
 					bb[j][k] = board.getArrayBoard()[j][k];
 				}
 			}
-			Board possibleBoard = new Board(board.getTurn(), bb);
+			TicTacToeBoard possibleBoard = new TicTacToeBoard(board.getTurn(), bb);
 			possibleBoard.setBoard('X', actions[i].getAction()[0], actions[i].getAction()[1]);
 			if (min > maxValue(possibleBoard))
 			{

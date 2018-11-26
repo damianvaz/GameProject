@@ -4,7 +4,7 @@ public class Game
 {
 	
 	private int turn =0;
-	private Board board = new Board();
+	private TicTacToeBoard board = new TicTacToeBoard();
 	private char player;
 	
 	
@@ -13,7 +13,7 @@ public class Game
 		
 	}
 	
-	public Board getBoard()
+	public TicTacToeBoard getBoard()
 	{
 		return this.board;
 	}

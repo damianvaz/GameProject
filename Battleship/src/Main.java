@@ -7,6 +7,7 @@ public class Main
 {
 	static int size = 0;
 	static boolean lastoneHit = false;
+	static int[] pointHitLast;
 	static boolean secondLastHit = false;
 
 	public static void menu()
@@ -60,7 +61,7 @@ public class Main
 			System.out.println("Yout hits and misses on Enemy territory");
 			player1.enemyBoard.printBoard();
 			System.out.println();
-//			AIPlayer.board.printBoard();
+			AIPlayer.board.printBoard();
 			askForCoordenates(player1.enemyBoard, AIPlayer);
 			AIPlay(player1);
 		}
@@ -68,6 +69,7 @@ public class Main
 	
 	public static void AIPlay(Player player)
 	{
+		int row, col;
 		Random random = new Random();
 		/*
 		if (lastoneHit)
@@ -75,12 +77,14 @@ public class Main
 			// try on horizontal dimension first
 			if(!secondLastHit)
 			{
-				
+				row = pointHitLast[0];
+				col = pointHitLast[1];
 			}
+			
 		}
 		*/
-		int row = random.nextInt(size);
-		int col = random.nextInt(size);
+		row = random.nextInt(size);
+		col = random.nextInt(size);
 		
 		//check if coordenates hit something
 		if(player.board.board[row][col] != ' ')
@@ -90,6 +94,7 @@ public class Main
 			player.board.setHit(row, col);
 			boat.setHit();
 			lastoneHit = true;
+			pointHitLast = new int[]{row, col};
 		}
 		else
 		{
