@@ -12,10 +12,10 @@ public class LabelFrame extends JFrame
 {
     private JPanel panel1;
     private JLabel label1;
-    private JButton battleshipButton, tickTackToeButton;
+    private JButton battleshipButton, ticTacToeButton;
     private final URL background = getClass().getResource("mainMenuBackground.jpg");
     Icon battleshipIcon = new ImageIcon(getClass().getResource("battleshipButton.png"));
-    Icon ticTacIcon = new ImageIcon(getClass().getResource("tickTackToeButton.png"));
+    Icon ticTacIcon = new ImageIcon(getClass().getResource("ticTacToeButton.png"));
     
     public LabelFrame() throws MalformedURLException 
     {
@@ -32,16 +32,16 @@ public class LabelFrame extends JFrame
         battleshipButton.setBorderPainted(false);
         battleshipButton.setBorder(BorderFactory.createEmptyBorder(100, 0, 0, 0));
         
-        tickTackToeButton = new JButton();
-        tickTackToeButton.setIcon(ticTacIcon);
-        tickTackToeButton.setOpaque(false);
-        tickTackToeButton.setContentAreaFilled(false);
-        tickTackToeButton.setBorderPainted(false);
-        tickTackToeButton.setBorder(BorderFactory.createEmptyBorder(100, 0, 0, 0));
+        ticTacToeButton = new JButton();
+        ticTacToeButton.setIcon(ticTacIcon);
+        ticTacToeButton.setOpaque(false);
+        ticTacToeButton.setContentAreaFilled(false);
+        ticTacToeButton.setBorderPainted(false);
+        ticTacToeButton.setBorder(BorderFactory.createEmptyBorder(100, 0, 0, 0));
         
         this.add(panel1);
         panel1.add(battleshipButton);
-        panel1.add(tickTackToeButton);
+        panel1.add(ticTacToeButton);
         
     }
 }

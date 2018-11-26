@@ -54,7 +54,9 @@ public class Boats
 	}
 	public void setHit()
 	{
+		System.out.println("Boat health before: " + this.health);
 		this.health -= 10;
+		System.out.println("Boat health now: " + this.health);
 		if (health <= 0)
 		{
 			System.out.println("BOAT SUNK");
