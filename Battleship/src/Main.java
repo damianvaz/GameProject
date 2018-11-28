@@ -62,7 +62,7 @@ public class Main
 			player1.enemyBoard.printBoard();
 			System.out.println();
 			AIPlayer.board.printBoard();
-			askForCoordenates(player1.enemyBoard, AIPlayer);
+			askForCoordinates(player1.enemyBoard, AIPlayer);
 			AIPlay(player1);
 		}
 	}
@@ -87,12 +87,16 @@ public class Main
 		col = random.nextInt(size);
 		
 		//check if coordenates hit something
-		if(player.board.board[row][col] != ' ')
+		if(player.board.board[row][col] != ' ' && player.board.board[row][col] != '!')
 		{
 			System.out.println("Enemy hit your boat!!");
 			Boats boat = player.getBoat(row, col);
 			player.board.setHit(row, col);
 			boat.setHit();
+			if(boat.health <= 0)
+			{
+				player.killBoat();
+			}
 			lastoneHit = true;
 			pointHitLast = new int[]{row, col};
 		}
@@ -103,23 +107,27 @@ public class Main
 		}
 	}
 	
-	public static void askForCoordenates(Board seeableEnemyBoard, Player AIPlayer)
+	public static void askForCoordinates(Board seeableEnemyBoard, Player AIPlayer)
 	{
-		//ask for coordenates
+		//ask for coordinates
 		Scanner in = new Scanner(System.in);
 		System.out.println("Enter row coordenate: ");
 		int row = in.nextInt();
 		System.out.println("Enter col coordenate: ");
 		int col = in.nextInt();
 		
-		//check if coordenates hit something
-		if(AIPlayer.board.board[row][col] != ' ')
+		//check if coordinates hit something
+		if(AIPlayer.board.board[row][col] != ' ' && AIPlayer.board.board[row][col] != '!')
 		{
 			System.out.println("You got a hit!!");
 			seeableEnemyBoard.setHit(row, col);
 			Boats boat = AIPlayer.getBoat(row, col);
 			AIPlayer.board.setHit(row, col);
 			boat.setHit();
+			if (boat.health <= 0)
+			{
+				AIPlayer.killBoat();
+			}
 		}
 		else
 		{
