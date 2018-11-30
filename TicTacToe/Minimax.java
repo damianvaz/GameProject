@@ -9,20 +9,16 @@ public class Minimax
 
 	public int endGameScore(TicTacToeBoard gameBoard)
 	{
-		System.out.println("Reached End Game Player who won: " + gameBoard.getPlayer());
 		if (gameBoard.whoWon() == playerAI)
 		{
-			System.out.println("DETECTED AI WON");
 			return 10;
 		} 
 		else if (gameBoard.whoWon() == opponent)
 		{
-			System.out.println("DETECTED OPPONENT WON");
 			return -10;
 		} 
 		else
 		{
-			System.out.println("Detected Draaaaaww!");
 			return 0;
 		}
 	}
@@ -101,27 +97,13 @@ public class Minimax
 				}
 			}
 			TicTacToeBoard possibleBoard = new TicTacToeBoard(copiedCharArray, player, x, y);
-			System.out.println("POSSSSSWSSSSSSSSSIBLE BOARD:  ___________________________________________");
-			possibleBoard.printBoard();
 			scores.add(minimax(possibleBoard));
-			// list of moves
-			// storeMoves.add(moves[i]);
 		}
-		/*
-		for (int i = 0; i < moves.length; i++)
-		{
-			System.out.println(
-					"Scores: " + scores.get(i) + " Move: " + moves[i].getAction()[0] + ", " + moves[i].getAction()[1]);
-
-		}
-		*/
-		System.out.println("DONE -----------------------------------------------------------------------------------");
 		scores.trimToSize();
 		char player = board.getPlayer();
 		// Decide between choosing min or max Calculation
 		if (player == playerAI)
 		{
-			System.out.println("decided to do MAX, Player: " + player);
 			// Do max
 			int maxScoreIsAt = 0;
 			int max = -10;
@@ -139,7 +121,6 @@ public class Minimax
 		} 
 		else
 		{
-			System.out.println("Decided to do MIN, Player: " + player);
 			// Do min
 			int minScoreIsAt = 0;
 			int min = 10;

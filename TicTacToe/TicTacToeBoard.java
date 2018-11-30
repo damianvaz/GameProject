@@ -81,7 +81,7 @@ public class TicTacToeBoard
 	{
 		if (row > 2 || col > 2 || this.board[row][col] != ' ')
 		{
-			System.out.println("Ilegal play, try again");
+//			System.out.println("Ilegal play, try again");
 			return false;
 		} else
 		{

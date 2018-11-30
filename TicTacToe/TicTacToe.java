@@ -15,36 +15,34 @@ public class TicTacToe
 		{
 			if (player == 'X')
 			{
+				f.hideLabelThinking();
 				while (!f.isActionSet())
 				{
-					System.out.println("Waiting for click");
-					//waiting for action
+					f.revalidateFrame();;
 				}
 				
 				Action newAction = f.getAction();
 				f.clearAction();
 				game.makeMove(newAction.getAction()[0], newAction.getAction()[1]);
-				game.getBoard().printBoard();
 				
 				if (game.getBoard().isGameOver())
 				{
 					break;
 				}
-				
+				f.showLabelThinking();
 				Minimax AI = new Minimax(game.getBoard(), 'O');
 				Action Move = AI.getBestChoice();
 				game.makeMove(Move.getAction()[0], Move.getAction()[1]);
 				f.setButtonText(Move.getAction()[0], Move.getAction()[1]);
-				game.getBoard().printBoard();
 			}
 			else
 			{
+				f.showLabelThinking();
 				Minimax AI = new Minimax(game.getBoard(), 'X');
 				Action Move = AI.getBestChoice();
 				game.makeMove(Move.getAction()[0], Move.getAction()[1]);
 				f.setButtonText(Move.getAction()[0], Move.getAction()[1]);
-				game.getBoard().printBoard();
-				
+				f.hideLabelThinking();
 				if (game.getBoard().isGameOver())
 				{
 					break;
@@ -52,14 +50,12 @@ public class TicTacToe
 				
 				while (!f.isActionSet())
 				{
-					System.out.println("Waiting for click");
+					f.revalidateFrame();
 					//waiting for action
 				}
-				
 				Action newAction = f.getAction();
 				f.clearAction();
 				game.makeMove(newAction.getAction()[0], newAction.getAction()[1]);
-				game.getBoard().printBoard();
 			}
 		}
 		String message;
@@ -86,7 +82,7 @@ public class TicTacToe
 			player = f.getPlayer();
 			opponent = player == 'X' ? 'O' : 'X';
 			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			f.setSize(300,300);
+			f.pack();
 			f.setVisible(true);
 			makeNewGame(game, f);
 			
@@ -106,7 +102,7 @@ public class TicTacToe
 		char opponent; 
 		opponent = player == 'X' ? 'O' : 'X';
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setSize(300,300);
+		f.pack();
 		f.setVisible(true);
 		makeNewGame(game, f);	
 	}

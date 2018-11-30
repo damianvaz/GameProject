@@ -1,4 +1,6 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -6,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -16,9 +19,17 @@ public class TicTacToeMainFrame extends JFrame
 	private char player, opponent;
 	private Action lastAction;
 	private int turn = 0;
+	public JLabel label;
+	private JPanel panel;
+	
 	public TicTacToeMainFrame()
 	{
 		super("TicTacToe Game by Damian Vaz");
+		String thinkingString = "I am thinking ";
+		label = new JLabel(thinkingString);
+		panel = new JPanel();
+		panel.setPreferredSize(new Dimension(300, 300));
+		label.setVisible(false);
 		drawFrame();
 		
 	}
@@ -26,8 +37,29 @@ public class TicTacToeMainFrame extends JFrame
 	{
 		this.dispose();
 	}
+
+	public void revalidateFrame()
+	{
+		this.revalidate();
+		this.pack();
+	}
+
+	public void showLabelThinking()
+	{
+		label.setVisible(true);
+		this.revalidate();
+		this.pack();
+	}
+	public void hideLabelThinking()
+	{
+		label.setVisible(false);
+		this.revalidate();
+		this.pack();
+	}
 	public void drawFrame()
 	{
+		this.add(label, BorderLayout.SOUTH);
+
 		Object[] options1 = {"I want to be Player X", "I want to be Player O"};
 		
 		int mode = JOptionPane.showOptionDialog(null, "Choose your Player", "Player Selection", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options1, null);
@@ -42,8 +74,8 @@ public class TicTacToeMainFrame extends JFrame
 		
 		opponent = player == 'X' ? 'O' : 'X';
 		gridLayout = new GridLayout(3, 3, 5, 5);
-		getContentPane().setBackground(Color.BLACK);
-		setLayout(gridLayout);
+		panel.setBackground(Color.BLACK);
+		panel.setLayout(gridLayout);
 		ButtonHandler buttonHandler = new ButtonHandler();
 		for (int i = 0; i < buttons.length; i++)
 		{
@@ -52,9 +84,10 @@ public class TicTacToeMainFrame extends JFrame
 				buttons[i][j] = new JButton();
 				buttons[i][j].setBackground(Color.WHITE);
 			    buttons[i][j].addActionListener(buttonHandler);
-				add(buttons[i][j]);
+				panel.add(buttons[i][j]);
 			}
 		}
+		add(panel);
 		this.revalidate();
 	}
 
