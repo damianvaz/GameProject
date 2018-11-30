@@ -14,6 +14,8 @@ public class Player
 	Board board;
 	Board enemyBoard;
 	int boardSize;
+	int boatsAlive = 10;
+
 	
 	public Player(int size)
 	{
@@ -31,7 +33,15 @@ public class Player
 		boats[9] = new Submarine();
 		this.boardSize = size;
 	}
-	
+	public void killBoat()
+	{
+		boatsAlive--;
+		if (boatsAlive <= 0)
+		{
+			System.out.println("GAME OVER!");
+			System.exit(0);
+		}
+	}
 	public void setBoard()
 	{
 		for(int i = 0; i < boats.length; i++)
@@ -93,7 +103,7 @@ public class Player
 	
 	public Boats getBoat(int row, int col)
 	{
-		Boats boatFound = new Boats();
+		Boats boatFound = null;
 		for (int i = 0; i < boats.length; i++)
 		{
 			if (boats[i].isHere(row, col))

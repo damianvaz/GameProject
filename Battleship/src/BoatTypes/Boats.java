@@ -1,5 +1,4 @@
 package BoatTypes;
-import java.util.Random;
 
 public class Boats 
 {
@@ -13,7 +12,7 @@ public class Boats
 	boolean isVertical = false;
 	boolean[] isHit;
 	boolean isSunk;
-	int health;
+	public int health;
 	
 	
 	public void setBoatVar(int row, int col, boolean isVertical)
@@ -23,12 +22,12 @@ public class Boats
 		this.isVertical = isVertical;
 		if (isVertical)
 		{
-			this.rowEnd = rowBegin + spaces;
+			this.rowEnd = rowBegin + (spaces - 1);
 			this.colEnd = colBegin;
 		}
 		else
 		{
-			this.colEnd = colBegin + spaces;
+			this.colEnd = colBegin + (spaces - 1);
 			this.rowEnd = rowBegin;
 		}
 		this.isSunk = false;
@@ -38,14 +37,16 @@ public class Boats
 		boolean condition = false;
 		if (isVertical)
 		{
-			if (this.colBegin <= y && y <= this.colEnd )
+			// if the boat is vertical the col is constant, and the row varies between the boat rowBegin and boat rowEnd
+			if (this.colBegin == this.colEnd && this.colEnd == y && this.rowBegin <= x && x <= this.rowEnd)
 			{
 				condition = true;
 			}
 		}
 		else
 		{
-			if (this.rowBegin <= x && x <= this.rowEnd)
+			// if the boat is not vertical the row remains the same and the col varies between colBegin and colEnd
+			if (this.rowBegin == this.rowEnd && this.rowEnd == x && this.colBegin <= y && y <= this.colEnd)
 			{
 				condition = true;
 			}
@@ -54,9 +55,7 @@ public class Boats
 	}
 	public void setHit()
 	{
-		System.out.println("Boat health before: " + this.health);
 		this.health -= 10;
-		System.out.println("Boat health now: " + this.health);
 		if (health <= 0)
 		{
 			System.out.println("BOAT SUNK");
