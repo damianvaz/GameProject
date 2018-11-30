@@ -1,159 +1,179 @@
 import java.util.ArrayList;
 
-public class TicTacToeBoard 
+public class TicTacToeBoard
 {
-	//fill board with spaces
+	// fill board with spaces
 	private char[][] board;
 	private int turn;
 	private char player;
 
-	
 	public TicTacToeBoard()
 	{
 		board = new char[][]
 		{
-			{' ', ' ', ' '},
-			{' ', ' ', ' '},
-			{' ', ' ', ' '},
-		};
+				{ ' ', ' ', ' ' },
+				{ ' ', ' ', ' ' },
+				{ ' ', ' ', ' ' }, };
 	}
-	
+
 	public TicTacToeBoard(int turn, char[][] board)
 	{
 		this.board = board;
 		this.turn = turn;
 	}
-	
+
+	public TicTacToeBoard(TicTacToeBoard newBoard)
+	{
+		this.board = newBoard.getArrayBoard();
+	}
+
+	public TicTacToeBoard(char[][] board, char player, int x, int y)
+	{
+		this.board = board;
+		this.board[x][y] = player;
+	}
+
 	public TicTacToeBoard(char[][] board)
 	{
 		this.board = board;
 	}
+
 	public char[][] getArrayBoard()
 	{
 		return this.board;
 	}
-	
-	
+
 	public void setTurn(int turn)
 	{
 		this.turn = turn;
 	}
+
 	public char[][] getBoard()
 	{
 		return board;
 	}
+
 	public void setBoard(char[][] board)
 	{
 		this.board = board;
 	}
-	
+
 	public void setBoard(char player, int x, int y)
 	{
 		this.board[x][y] = player;
 	}
-		
+
 	public void printBoard()
 	{
 		System.out.println(" " + this.board[0][0] + "  | " + this.board[0][1] + "  | " + this.board[0][2] + "  ");
 		System.out.println("==============");
 		System.out.println(" " + this.board[1][0] + "  | " + this.board[1][1] + "  | " + this.board[1][2] + "  ");
 		System.out.println("==============");
-		System.out.println(" " + this.board[2][0] + "  | " + this.board[2][1] + "  | " + this.board[2][2] + "  ");	
+		System.out.println(" " + this.board[2][0] + "  | " + this.board[2][1] + "  | " + this.board[2][2] + "  ");
 		System.out.println();
 		System.out.println();
 		System.out.println();
 	}
-	
-	
+
 	public boolean isValidPlay(int row, int col)
 	{
-		if(row > 2 || col > 2 || this.board[row][col] != ' ')
+		if (row > 2 || col > 2 || this.board[row][col] != ' ')
 		{
 			System.out.println("Ilegal play, try again");
 			return false;
-		}
-		else
+		} else
 		{
 			return true;
 		}
 	}
+
 	public boolean isGameOver()
 	{
-		
-		for(int i=0;i<3;i++)
+
+		for (int i = 0; i < 3; i++)
 		{
 			// check vertical lines
-			if(board[i][0] == board[i][1] && board[i][0] == board[i][2] && board[i][1] != ' ')
+			if (board[i][0] == board[i][1] && board[i][0] == board[i][2] && board[i][1] != ' ')
 			{
-				//System.out.println("Game won by: " + board[i][1]);
+				// System.out.println("Game won by: " + board[i][1]);
 				return true;
 			}
-			//check horizontal lines
-			if(board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != ' ')
+			// check horizontal lines
+			if (board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != ' ')
 			{
-				//System.out.println("Game won by: " + board[0][i]);
+				// System.out.println("Game won by: " + board[0][i]);
 				return true;
 			}
 		}
-		//check diagonals 
-		if(((board[0][0] == board[1][1] && board[1][1] == board[2][2]) || 
-				(board[0][2] == board[1][1] && board[1][1] == board[2][0])) && board[1][1] != ' ')
+		// check diagonals
+		if (((board[0][0] == board[1][1] && board[1][1] == board[2][2])
+				|| (board[0][2] == board[1][1] && board[1][1] == board[2][0])) && board[1][1] != ' ')
 		{
-			//System.out.println("Game won by " + board[1][1]);
+			// System.out.println("Game won by " + board[1][1]);
 			return true;
 		}
 		if (this.getTurn() >= 9)
 		{
-			//System.out.println("Game draw by stalemate");
+			// System.out.println("Game draw by stalemate");
 			return true;
-		}
-		else
+		} else
 		{
 			return false;
 		}
-		
+
 	}
-	
-	//make it simple CLEAN THE CODE
+
+	// make it simple CLEAN THE CODE
 	public char whoWon()
 	{
+		char a = ' ';
 		if (this.isGameOver())
 		{
-			for(int i=0;i<3;i++)
+			for (int i = 0; i < 3; i++)
 			{
 				// check horizontal lines
-				if(board[i][0] == board[i][1] && board[i][0] == board[i][2] && board[i][1] != ' ')
+				if (board[i][0] == board[i][1] && board[i][0] == board[i][2] && board[i][1] != ' ')
 				{
 					System.out.println("Game won by: " + board[i][1]);
+					System.out.println("BOARD WON : ");
+					System.out.println("turn:    " + this.getTurn());
+					printBoard();
 					return board[i][1];
 				}
-				//check vertical lines
-				if(board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != ' ')
+				// check vertical lines
+				else if (board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != ' ')
 				{
 					System.out.println("Game won by: " + board[0][i]);
+					System.out.println("BOARD WON : ");
+					System.out.println("turn:    " + this.getTurn());
+
+					printBoard();
 					return board[0][i];
 				}
 			}
-			//check diagonals 
-			if(((board[0][0] == board[1][1] && board[1][1] == board[2][2]) || 
-					(board[0][2] == board[1][1] && board[1][1] == board[2][0])) && board[1][1] != ' ')
+			// check diagonals
+			if (((board[0][0] == board[1][1] && board[1][1] == board[2][2])
+					|| (board[0][2] == board[1][1] && board[1][1] == board[2][0])) && board[1][1] != ' ')
 			{
 				System.out.println("Game won by " + board[1][1]);
+				System.out.println("BOARD WON : ");
+				printBoard();
+				System.out.println("turn:    " + this.getTurn());
+
 				return board[1][1];
-			}
-			else 
+			} else
 			{
-				System.out.println("Game draw");
-				return 'd';
+				// System.out.println("Game draw");
+				// return 'd';
+				return a;
 			}
-		}
-		else
+		} else
 		{
-			System.out.println("Game not over");
-			return 'n';
+			System.exit(2);
+			return a;
 		}
 	}
-	
+
 	public Action[] possiblePlays()
 	{
 		ArrayList<Action> possiblePlays = new ArrayList<Action>();
@@ -171,10 +191,11 @@ public class TicTacToeBoard
 		possiblePlays.trimToSize();
 		return possiblePlays.toArray(new Action[possiblePlays.size()]);
 	}
+
 	public int getTurn()
 	{
-		int count =0;
-		for(int i = 0; i < 3; i++)
+		int count = 0;
+		for (int i = 0; i < 3; i++)
 		{
 			for (int j = 0; j < 3; j++)
 			{
@@ -186,16 +207,18 @@ public class TicTacToeBoard
 		}
 		return count;
 	}
+
 	public char getPlayer()
 	{
+
 		int turn = getTurn();
 		if (turn % 2 == 0)
 		{
-			 return 'X';
-		}
-		else
+			return 'X';
+		} else
 		{
 			return 'O';
 		}
-	} 
+
+	}
 }

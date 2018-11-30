@@ -30,7 +30,8 @@ public class TicTacToe
 			//Board teste = new Board(testeBoardChar);
 			//char a = teste.whoWon();
 			//System.out.println("venceu   !!! " + a);
-			Action Move = Minimax.minimax(game.getBoard());
+			Minimax AI = new Minimax(game.getBoard(), 'O');
+			Action Move = AI.getBestChoice();
 			game.makeMove(Move.getAction()[0], Move.getAction()[1]);
 			game.getBoard().printBoard();
 			//System.out.println("Ação " + Move.getAction()[0] + Move.getAction()[1]);

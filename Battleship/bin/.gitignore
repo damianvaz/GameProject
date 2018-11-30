@@ -1,6 +1,10 @@
-/Action.class
 /Board.class
 /BoatTypes/
+/README.md
+/mainMenuBackground.jpg
+/ticTacToeButton.png
+/tickTackToeButton.png
+/Action.class
 /Game.class
 /LabelFrame.class
 /Main.class
@@ -8,11 +12,6 @@
 /Minimax.class
 /Move.class
 /Player.class
-/README.md
 /TicTacToe.class
 /TicTacToeBoard.class
-/battleshipButton.png
-/mainMenuBackground.jpg
 /myCustomPanel.class
-/ticTacToeButton.png
-/tickTackToeButton.png
