@@ -65,6 +65,7 @@ public class TicTacToeBoard
 
 	public void printBoard()
 	{
+		
 		System.out.println(" " + this.board[0][0] + "  | " + this.board[0][1] + "  | " + this.board[0][2] + "  ");
 		System.out.println("==============");
 		System.out.println(" " + this.board[1][0] + "  | " + this.board[1][1] + "  | " + this.board[1][2] + "  ");
@@ -73,6 +74,7 @@ public class TicTacToeBoard
 		System.out.println();
 		System.out.println();
 		System.out.println();
+		
 	}
 
 	public boolean isValidPlay(int row, int col)
@@ -134,20 +136,11 @@ public class TicTacToeBoard
 				// check horizontal lines
 				if (board[i][0] == board[i][1] && board[i][0] == board[i][2] && board[i][1] != ' ')
 				{
-					System.out.println("Game won by: " + board[i][1]);
-					System.out.println("BOARD WON : ");
-					System.out.println("turn:    " + this.getTurn());
-					printBoard();
 					return board[i][1];
 				}
 				// check vertical lines
 				else if (board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != ' ')
 				{
-					System.out.println("Game won by: " + board[0][i]);
-					System.out.println("BOARD WON : ");
-					System.out.println("turn:    " + this.getTurn());
-
-					printBoard();
 					return board[0][i];
 				}
 			}
@@ -155,16 +148,9 @@ public class TicTacToeBoard
 			if (((board[0][0] == board[1][1] && board[1][1] == board[2][2])
 					|| (board[0][2] == board[1][1] && board[1][1] == board[2][0])) && board[1][1] != ' ')
 			{
-				System.out.println("Game won by " + board[1][1]);
-				System.out.println("BOARD WON : ");
-				printBoard();
-				System.out.println("turn:    " + this.getTurn());
-
 				return board[1][1];
 			} else
 			{
-				// System.out.println("Game draw");
-				// return 'd';
 				return a;
 			}
 		} else

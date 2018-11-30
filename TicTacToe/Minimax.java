@@ -119,7 +119,7 @@ public class Minimax
 		scores.trimToSize();
 		char player = board.getPlayer();
 		// Decide between choosing min or max Calculation
-		if (player == 'O')
+		if (player == playerAI)
 		{
 			System.out.println("decided to do MAX, Player: " + player);
 			// Do max
