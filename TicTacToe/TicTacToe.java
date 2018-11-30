@@ -62,6 +62,7 @@ public class TicTacToe
 		if (game.getBoard().whoWon() == player)
 		{
 			message = "Congratulations!! You Won!!";
+			
 		} else if (game.getBoard().whoWon() == opponent)
 		{
 			message = "Too bad! Try next time!";

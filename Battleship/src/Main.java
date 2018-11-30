@@ -1,6 +1,8 @@
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+
 import BoatTypes.Boats;
 
 public class Main 
@@ -53,9 +55,15 @@ public class Main
 		
 		player1.setRandomBoard();
 		AIPlayer.setRandomBoard();
+		BattleshipFrame frame = new BattleshipFrame(size, player1); 
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		frame.setResizable(false);
+		frame.pack();
 		
 		while(true)
 		{
+			
 			System.out.println("Your Board");
 			player1.board.printBoard();
 			System.out.println("Yout hits and misses on Enemy territory");
@@ -63,6 +71,8 @@ public class Main
 			System.out.println();
 			AIPlayer.board.printBoard();
 			askForCoordinates(player1.enemyBoard, AIPlayer);
+			
+			
 			AIPlay(player1);
 		}
 	}
@@ -71,7 +81,7 @@ public class Main
 	{
 		int row, col;
 		Random random = new Random();
-		/*
+		
 		if (lastoneHit)
 		{
 			// try on horizontal dimension first
@@ -82,7 +92,7 @@ public class Main
 			}
 			
 		}
-		*/
+		
 		row = random.nextInt(size);
 		col = random.nextInt(size);
 		
@@ -110,11 +120,13 @@ public class Main
 	public static void askForCoordinates(Board seeableEnemyBoard, Player AIPlayer)
 	{
 		//ask for coordinates
+		
 		Scanner in = new Scanner(System.in);
 		System.out.println("Enter row coordenate: ");
 		int row = in.nextInt();
 		System.out.println("Enter col coordenate: ");
 		int col = in.nextInt();
+		
 		
 		//check if coordinates hit something
 		if(AIPlayer.board.board[row][col] != ' ' && AIPlayer.board.board[row][col] != '!')
@@ -134,5 +146,6 @@ public class Main
 			System.out.println("Not a hit!");
 			seeableEnemyBoard.setMiss(row, col);
 		}
+		
 	}
 }
