@@ -55,12 +55,15 @@ public class Main
 		
 		player1.setRandomBoard();
 		AIPlayer.setRandomBoard();
-		BattleshipFrame frame = new BattleshipFrame(size, player1); 
+		
+		// Opens the frame
+		BattleshipFrame frame = new BattleshipFrame(size, player1, AIPlayer); 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setResizable(false);
 		frame.pack();
 		
+		/*
 		while(true)
 		{
 			
@@ -75,6 +78,7 @@ public class Main
 			
 			AIPlay(player1);
 		}
+		*/
 	}
 	
 	public static void AIPlay(Player player)

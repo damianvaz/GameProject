@@ -4,8 +4,24 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class TicTacToe
-{
-	
+{	
+	private TicTacToeMainFrame frame;
+	public TicTacToeMainFrame getFrame()
+	{
+		return this.frame;
+	}
+	public TicTacToe()
+	{
+		Game game = new Game();
+		frame = new TicTacToeMainFrame();
+		makeNewGame(game, frame);
+
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setVisible(true);
+		makeNewGame(game, frame);
+		
+	}
 	public static void makeNewGame(Game game, TicTacToeMainFrame f)
 	{
 		char player = f.getPlayer();
@@ -51,6 +67,7 @@ public class TicTacToe
 				while (!f.isActionSet())
 				{
 					f.revalidateFrame();
+					System.out.println("FAFA");
 					// waiting for action
 				}
 				Action newAction = f.getAction();
@@ -93,7 +110,8 @@ public class TicTacToe
 		}
 	}
 
-	public static void startGame()
+/*
+	public static void main(String[] args)
 	{
 		Game game = new Game();
 		TicTacToeMainFrame f = new TicTacToeMainFrame();
@@ -103,10 +121,6 @@ public class TicTacToe
 		f.setVisible(true);
 		makeNewGame(game, f);
 	}
-
-	public static void main(String[] args)
-	{
-		startGame();
-	}
+	*/
 
 }

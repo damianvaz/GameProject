@@ -22,10 +22,6 @@ public class TicTacToeMainFrame extends JFrame
 	public JLabel label;
 	private JPanel panel;
 	
-	public TicTacToeMainFrame getFrame()
-	{
-		return this;
-	}
 	public TicTacToeMainFrame()
 	{
 		super("TicTacToe Game by Damian Vaz");
@@ -36,6 +32,10 @@ public class TicTacToeMainFrame extends JFrame
 		label.setVisible(false);
 		drawFrame();
 		
+	}
+	public JPanel getPanel()
+	{
+		return this.panel;
 	}
 	public void clearFrame()
 	{

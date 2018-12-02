@@ -1,17 +1,34 @@
+/Action.class
+/BattleshipFrame$buttonHandler.class
+/BattleshipFrame.class
 /Board.class
 /BoatTypes/
-/README.md
-/mainMenuBackground.jpg
-/ticTacToeButton.png
-/tickTackToeButton.png
-/Action.class
 /Game.class
 /LabelFrame.class
 /Main.class
+/MainMenu$1.class
+/MainMenu$2.class
 /MainMenu.class
 /Minimax.class
 /Move.class
 /Player.class
+/README.md
 /TicTacToe.class
 /TicTacToeBoard.class
+/TicTacToeMainFrame$ButtonHandler.class
+/TicTacToeMainFrame.class
+/background2.jpg
+/backgroundAdapt.class
+/battleship botao.png
+/battleshipButton.png
+/difficultyMenu.class
+/easy.png
+/fundo jogo.jpg
+/gameExecutor.class
+/hard.png
+/jogo da velha botao.png
+/mainMenuBackground.jpg
+/medium.png
 /myCustomPanel.class
+/ticTacToeButton.png
+/tickTackToeButton.png

@@ -63,12 +63,17 @@ public class MainMenu extends JFrame
 			public void actionPerformed(ActionEvent evt)
 			{
 				clearFrame();
-				TicTacToeMainFrame f = new TicTacToeMainFrame();
-				TicTacToe.startGame();
-				f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				f.pack();
-				f.setVisible(true);
-				f.setResizable(false);
+				TicTacToe t = new TicTacToe();
+				
+				
+				frame.revalidate();
+				frame.repaint();
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame.pack();
+				frame.setVisible(true);
+				frame.setResizable(false);
+	
+				
 				/*
 				
 				
