@@ -17,53 +17,33 @@ public class TicTacToeMainFrame extends JFrame
 	JButton[][] buttons = new JButton[3][3];
 	private GridLayout gridLayout; 
 	private char player, opponent;
-	private Action lastAction;
-	private int turn = 0;
-	public JLabel label;
-	private JPanel panel;
+	private Game game;
 	
-	public TicTacToeMainFrame()
+	
+	public TicTacToeMainFrame(Game game)
 	{
 		super("TicTacToe Game by Damian Vaz");
-		String thinkingString = "I am thinking ";
-		label = new JLabel(thinkingString);
-		panel = new JPanel();
-		panel.setPreferredSize(new Dimension(300, 300));
-		label.setVisible(false);
+		this.game = game;
 		drawFrame();
 		
 	}
-	public JPanel getPanel()
+	private void newGame()
 	{
-		return this.panel;
+		clearFrame();
+		Game game = new Game();
+		TicTacToeMainFrame frame = new TicTacToeMainFrame(game);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(500, 500);
+		frame.setBackground(Color.BLACK);
+		frame.setVisible(true);	
 	}
-	public void clearFrame()
+	private void clearFrame()
 	{
 		this.dispose();
 	}
 
-	public void revalidateFrame()
-	{
-		this.revalidate();
-		this.pack();
-	}
-
-	public void showLabelThinking()
-	{
-		label.setVisible(true);
-		this.revalidate();
-		this.pack();
-	}
-	public void hideLabelThinking()
-	{
-		label.setVisible(false);
-		this.revalidate();
-		this.pack();
-	}
 	public void drawFrame()
 	{
-		this.add(label, BorderLayout.SOUTH);
-
 		Object[] options1 = {"I want to be Player X", "I want to be Player O"};
 		
 		int mode = JOptionPane.showOptionDialog(null, "Choose your Player", "Player Selection", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options1, null);
@@ -78,8 +58,8 @@ public class TicTacToeMainFrame extends JFrame
 		
 		opponent = player == 'X' ? 'O' : 'X';
 		gridLayout = new GridLayout(3, 3, 5, 5);
-		panel.setBackground(Color.BLACK);
-		panel.setLayout(gridLayout);
+		getContentPane().setBackground(Color.BLACK);
+		setLayout(gridLayout);
 		ButtonHandler buttonHandler = new ButtonHandler();
 		for (int i = 0; i < buttons.length; i++)
 		{
@@ -88,10 +68,13 @@ public class TicTacToeMainFrame extends JFrame
 				buttons[i][j] = new JButton();
 				buttons[i][j].setBackground(Color.WHITE);
 			    buttons[i][j].addActionListener(buttonHandler);
-				panel.add(buttons[i][j]);
+			    add(buttons[i][j]);
 			}
 		}
-		add(panel);
+		if (player == 'O')
+		{
+			makeAIMove();
+		}
 		this.revalidate();
 	}
 
@@ -99,16 +82,54 @@ public class TicTacToeMainFrame extends JFrame
 	{
 		buttons[i][j].setText("" + opponent);
 		buttons[i][j].setFont(new Font("Arial", Font.PLAIN, 73));
-		turn++;
 	}
-	public Action getAction()
+	public char getPlayer()
 	{
-		return this.lastAction;
+		return this.player;
 	}
-	public boolean isActionSet()
+	public void makeUserMove(JButton buttonPressed, int x, int y)
 	{
-		if(lastAction != null)
+		buttonPressed.setFont(new Font("Arial", Font.PLAIN, 73));
+		buttonPressed.setText("" + player);
+		game.makeMove(x, y);
+	}
+	public void makeAIMove()
+	{
+		Minimax AI = new Minimax(game.getBoard(), opponent);
+		Action Move = AI.getBestChoice();
+		game.makeMove(Move.getAction()[0], Move.getAction()[1]);
+		setButtonText(Move.getAction()[0], Move.getAction()[1]);
+	}
+	public boolean checkGameOver()
+	{
+		if (game.getBoard().isGameOver())
 		{
+			String message;
+			if(game.getBoard().whoWon() == player)
+			{
+				message = "You Won!! Congratulations!!";
+			}
+			else if(game.getBoard().whoWon() == opponent)
+			{
+				message = "Too bad! Good luck next time!";
+			}
+			else
+			{
+				message = "Game Draw!";
+			}			
+			Object[] options2 = { "New Game", "Cancel" };
+			
+			int mode = JOptionPane.showOptionDialog(null, message, "Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options2, null);
+			if (mode == JOptionPane.YES_OPTION)
+			{
+				game = new Game();
+				newGame();
+
+			} 
+			else
+			{
+				clearFrame();
+			}
 			return true;
 		}
 		else
@@ -116,80 +137,39 @@ public class TicTacToeMainFrame extends JFrame
 			return false;
 		}
 	}
-	public void clearAction()
-	{
-		lastAction = null;
-	}
-	public char getPlayer()
-	{
-		return this.player;
-	}
 	private class ButtonHandler implements ActionListener
 	{
-
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			if (player == 'X')
+			int x = 0;
+			int y = 0;
+			JButton buttonPressed = (JButton) e.getSource();
+			for (int i = 0; i < buttons.length; i++)
 			{
-				int rest = turn % 2;
-				if (rest != 0)
+				for (int j = 0; j < buttons[i].length; j++)
 				{
-					JOptionPane.showMessageDialog(null, "It's still my turn! \n be patient I'm thinking", "Hold On", JOptionPane.ERROR_MESSAGE);
-				}
-				else
-				{
-					turn++;
-					int x = 0;
-					int y = 0;
-					JButton buttonPressed = (JButton) e.getSource();
-					for (int i = 0; i < buttons.length; i++)
+					if (buttonPressed.equals(buttons[i][j]))
 					{
-						for (int j = 0; j < buttons[i].length; j++)
-						{
-							if (buttonPressed.equals(buttons[i][j]))
-							{
-								x = i;
-								y = j;
-							}
-						}
+						x = i;
+						y = j;
 					}
-					lastAction = new Action(x, y);
-					buttonPressed.setFont(new Font("Arial", Font.PLAIN, 73));
-					buttonPressed.setText("" + player);
+				}
+			}		
+			// do isValid Play here
+			if (game.getBoard().isValidPlay(x, y))
+			{
+				makeUserMove(buttonPressed, x, y);
+				if (!checkGameOver())
+				{
+					makeAIMove();
+					checkGameOver();
 				}
 			}
 			else
 			{
-				int rest = turn % 2;
-				if (rest == 0)
-				{
-					JOptionPane.showMessageDialog(null, "It's still my turn! \n be patient I'm thinking", "Hold On", JOptionPane.ERROR_MESSAGE);
-				}
-				else
-				{
-					turn++;
-					int x = 0;
-					int y = 0;
-					JButton buttonPressed = (JButton) e.getSource();
-					for (int i = 0; i < buttons.length; i++)
-					{
-						for (int j = 0; j < buttons[i].length; j++)
-						{
-							if (buttonPressed.equals(buttons[i][j]))
-							{
-								x = i;
-								y = j;
-							}
-						}
-					}
-					lastAction = new Action(x, y);
-					buttonPressed.setFont(new Font("Arial", Font.PLAIN, 73));
-					buttonPressed.setText("" + player);
-				}
+				JOptionPane.showMessageDialog(null, "Oppsie, That space is not empty!", "Don't cheat man!", JOptionPane.ERROR_MESSAGE);
 			}
-			
 		}
-		
 	}
 }

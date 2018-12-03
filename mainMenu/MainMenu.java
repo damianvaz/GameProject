@@ -33,7 +33,6 @@ public class MainMenu extends JFrame
 		setLayout(new BorderLayout());
 
 		panel1 = new backgroundAdapt(background);
-	//	panel1.setLayout(new GridBagLayout());
 
 		battleshipButton = new JButton();
 		battleshipButton.setIcon(battleshipIcon);
@@ -47,9 +46,9 @@ public class MainMenu extends JFrame
 				clearFrame();
 				frame = new difficultyMenu();
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.pack();
-				frame.setVisible(true);
 				frame.setResizable(false);
+				frame.setVisible(true);
+				frame.pack();
 			}
 		});
 
@@ -63,29 +62,12 @@ public class MainMenu extends JFrame
 			public void actionPerformed(ActionEvent evt)
 			{
 				clearFrame();
-				TicTacToe t = new TicTacToe();
-				
-				
-				frame.revalidate();
-				frame.repaint();
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.pack();
-				frame.setVisible(true);
-				frame.setResizable(false);
-	
-				
-				/*
-				
-				
-				f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				f.pack();
-				f.setVisible(true);
-				*/
+				TicTacToe ticTacToe = new TicTacToe();
 			}
 		});
 
-		this.add(panel1);
 		panel1.add(battleshipButton);
 		panel1.add(ticTacButton);
+		this.add(panel1);
 	}
 }
