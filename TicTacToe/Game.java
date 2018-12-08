@@ -23,14 +23,6 @@ public class Game
 	public void makeMove(int row, int col)
 	{
 		turn++;
-		while(!board.isValidPlay(row, col))
-		{
-			Scanner teclado = new Scanner(System.in);
-			System.out.println("Enter row of play");
-			row = teclado.nextInt();
-			System.out.println("Enter col of play");
-			col = teclado.nextInt();
-		}
 		board.setBoard(this.getPlayer(), row, col);
 	}
 	public char getPlayer()

@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 import java.net.*;
 import javax.swing.*;
 
-public class difficultyMenu extends JFrame 
+public class difficultyMenu extends JPanel
 {
     private JPanel panel1;
     private JButton easyButton, mediumButton, hardButton;
@@ -15,7 +15,6 @@ public class difficultyMenu extends JFrame
     
     public difficultyMenu()
     {
-        super("Main Menu");
         setLayout(new BorderLayout());
         
         panel1 = new backgroundAdapt(background);
@@ -54,11 +53,9 @@ public class difficultyMenu extends JFrame
         panel1.add(mediumButton);   
         panel1.add(hardButton);   
         this.add(panel1);
+
     }
-    private void clearFrame()
-    {
-    	this.dispose();
-    }
+
     
     private class buttonHandler implements ActionListener
     {
@@ -67,7 +64,6 @@ public class difficultyMenu extends JFrame
 		public void actionPerformed(ActionEvent e)
 		{
 			JButton buttonPressed = (JButton) e.getSource();
-			clearFrame();
 			
 			if (buttonPressed.equals(easyButton))
 			{

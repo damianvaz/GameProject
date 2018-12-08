@@ -16,20 +16,13 @@ public class MainMenu extends JFrame
 {
 	private JPanel panel1;
 	private JButton battleshipButton, ticTacButton;
-	private JFrame frame;
 	private final URL background = getClass().getResource("fundo jogo.jpg");
 	Icon battleshipIcon = new ImageIcon(getClass().getResource("battleship botao.png"));
 	Icon ticTacIcon = new ImageIcon(getClass().getResource("jogo da velha botao.png"));
 
-	public void clearFrame()
-	{
-		this.dispose();
-	}
 	public MainMenu() throws MalformedURLException
 	{
 		super("Main Menu");
-		frame = this;
-
 		setLayout(new BorderLayout());
 
 		panel1 = new backgroundAdapt(background);
@@ -43,12 +36,11 @@ public class MainMenu extends JFrame
 		battleshipButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt)
 			{
-				clearFrame();
-				frame = new difficultyMenu();
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setResizable(false);
-				frame.setVisible(true);
-				frame.pack();
+				JPanel p = new difficultyMenu();
+				getContentPane().removeAll();
+				getContentPane().add(p);
+				getContentPane().revalidate();
+				getContentPane().repaint();
 			}
 		});
 
@@ -61,7 +53,6 @@ public class MainMenu extends JFrame
 		ticTacButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt)
 			{
-				clearFrame();
 				TicTacToe ticTacToe = new TicTacToe();
 			}
 		});
