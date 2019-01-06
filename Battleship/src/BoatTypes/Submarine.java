@@ -1,5 +1,7 @@
 package BoatTypes;
 
+import java.awt.Color;
+
 public class Submarine extends Boats
 {
 	public Submarine()
@@ -9,5 +11,6 @@ public class Submarine extends Boats
 		boatChar = 'S';
 		isHit = new boolean[spaces];
 		health = spaces * 10;
+		color = Color.YELLOW;
 	}
 }

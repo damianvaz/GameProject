@@ -1,5 +1,7 @@
 package BoatTypes;
 
+import java.awt.Color;
+
 public class AircraftCarrier extends Boats
 {
 	public AircraftCarrier()
@@ -9,5 +11,6 @@ public class AircraftCarrier extends Boats
 		boatChar = 'A';
 		isHit = new boolean[spaces];
 		health = spaces * 10;
+		color = Color.MAGENTA;
 	}
 }

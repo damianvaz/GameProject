@@ -1,5 +1,7 @@
 package BoatTypes;
 
+import java.awt.Color;
+
 public class Destroyer extends Boats
 {
 	public Destroyer()
@@ -9,5 +11,6 @@ public class Destroyer extends Boats
 		boatChar = 'D';
 		isHit = new boolean[spaces];
 		health = spaces * 10;
+		color = Color.PINK;
 	}
 }

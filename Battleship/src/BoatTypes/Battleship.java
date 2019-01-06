@@ -1,4 +1,7 @@
 package BoatTypes;
+
+import java.awt.Color;
+
 public class Battleship extends Boats
 {
 	public Battleship()
@@ -8,5 +11,7 @@ public class Battleship extends Boats
 		boatChar = 'B';
 		isHit = new boolean[spaces];
 		health = spaces * 10;
+		isComplexShape = true;
+		color = Color.BLUE;
 	}
 }

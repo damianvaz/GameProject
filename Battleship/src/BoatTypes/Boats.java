@@ -1,5 +1,7 @@
 package BoatTypes;
 
+import java.awt.Color;
+
 public class Boats 
 {
 	String name;
@@ -12,7 +14,10 @@ public class Boats
 	boolean isVertical = false;
 	boolean[] isHit;
 	boolean isSunk;
+	boolean isComplexShape = false;
 	public int health;
+	public boolean isBoatSet = false;
+	public Color color = Color.BLACK;
 	
 	
 	public void setBoatVar(int row, int col, boolean isVertical)
@@ -22,20 +27,81 @@ public class Boats
 		this.isVertical = isVertical;
 		if (isVertical)
 		{
-			this.rowEnd = rowBegin + (spaces - 1);
-			this.colEnd = colBegin;
+			if (isComplexShape)
+			{
+				this.rowEnd = rowBegin + (spaces - 2);
+				this.colEnd = colBegin;
+			}
+			else
+			{
+				this.rowEnd = rowBegin + (spaces - 1);
+				this.colEnd = colBegin;
+			}
 		}
 		else
 		{
-			this.colEnd = colBegin + (spaces - 1);
-			this.rowEnd = rowBegin;
+			if (isComplexShape)
+			{
+				this.colEnd = colBegin + (spaces - 2);
+				this.rowEnd = rowBegin;
+			}
+			else
+			{
+				this.colEnd = colBegin + (spaces - 1);
+				this.rowEnd = rowBegin;
+			}
 		}
 		this.isSunk = false;
+	}
+	public void setIsBoatSet(boolean isBoatSet)
+	{
+		this.isBoatSet = isBoatSet;
 	}
 	public boolean isHere(int x, int y)
 	{
 		boolean condition = false;
-		if (isVertical)
+		if (isComplexShape)
+		{
+			if (isVertical)
+			{
+				if (spaces == 4)
+				{
+					if (this.colBegin == this.colEnd && this.colEnd == y && this.rowBegin <= x && x <= this.rowEnd || 
+							(x == rowBegin + 1 && y == colBegin + 1))
+					{
+						condition = true;
+					}
+				}
+				else
+				{
+					if (this.colBegin == this.colEnd && this.colEnd == y && this.rowBegin <= x && x <= this.rowEnd || 
+							(x == rowBegin && y == colBegin + 1))
+					{
+						condition = true;
+					}
+				}
+			}
+			else
+			{
+				if (spaces == 4)
+				{
+					if (this.rowBegin == this.rowEnd && this.rowEnd == x && this.colBegin <= y && y <= this.colEnd
+							|| (x == rowBegin - 1 && y == colBegin + 1))
+					{
+						condition = true;
+					}
+				}
+				else
+				{
+					if (this.rowBegin == this.rowEnd && this.rowEnd == x && this.colBegin <= y && y <= this.colEnd
+							|| (x == rowBegin + 1 && y == colEnd))
+					{
+						condition = true;
+					}
+				}
+			}
+		}
+		else if (isVertical)
 		{
 			// if the boat is vertical the col is constant, and the row varies between the boat rowBegin and boat rowEnd
 			if (this.colBegin == this.colEnd && this.colEnd == y && this.rowBegin <= x && x <= this.rowEnd)
@@ -52,6 +118,10 @@ public class Boats
 			}
 		}
 		return condition;
+	}
+	public boolean getIsComplexShape()
+	{
+		return isComplexShape;
 	}
 	public void setHit()
 	{
