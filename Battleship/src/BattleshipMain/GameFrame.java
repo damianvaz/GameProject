@@ -89,6 +89,7 @@ public class GameFrame extends JFrame
 		
 		// Panel that shows the type of boats layout so that the user can set them on the board
 		JPanel boatsPanel = new JPanel();
+		JLabel lala = new JLabel("kaka");
 		boatsPanel.setPreferredSize(new Dimension(500,500));
 		boatsPanel.setLayout(new GridLayout(3, 2, 10, 10));
 		//making boats panel		
