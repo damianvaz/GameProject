@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="Battleship/src"/>
-	<classpathentry kind="src" path="mainMenu"/>
-	<classpathentry kind="src" path="TicTacToe"/>
-	<classpathentry kind="output" path="Battleship/bin"/>
-</classpath>
