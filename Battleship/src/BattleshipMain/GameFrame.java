@@ -42,9 +42,8 @@ public class GameFrame extends JFrame
 	
 	public GameFrame(int size)
 	{	
-		super("Battleship Game by Damian Vaz");
+		super("Spaceships: A game by Damian Vaz");
 		this.size = size;
-	//	mainPanel = new BackgroundAdapt(background);
 		mainPanel = new JPanel();
 		board = new Board(size);
 		tilesPanel = boardPanel(size);
@@ -117,7 +116,7 @@ public class GameFrame extends JFrame
 	    title.setFont(new Font("Papyrus",Font.PLAIN, 55));
 	    title.setHorizontalAlignment(SwingConstants.CENTER);
 	    
-	    mainPanel.setLayout(new BorderLayout(10,10));
+	    mainPanel.setLayout(new BorderLayout(15,15));
 	    mainPanel.add(title, BorderLayout.NORTH);
 		mainPanel.add(tilesPanel, BorderLayout.CENTER);
 		mainPanel.add(boatsPanel, BorderLayout.EAST);
@@ -150,12 +149,7 @@ public class GameFrame extends JFrame
 				tiles[i][j] = new Tiles(i,j);
 				tiles[i][j].addMouseListener(tilesHandler);
 				
-				/*
-				if (board.board[i][j] != ' ')
-				{
-					tiles[i][j].setBackground(Color.ORANGE);
-				} 
-				*/
+				
 				tiles[i][j].setBorder(BorderFactory.createLineBorder(null, 1));
 				tilesPanel.add(tiles[i][j]);
 			}
@@ -442,12 +436,9 @@ public class GameFrame extends JFrame
 					enemyPlayer.setRandomBoard();
 					
 					getContentPane().removeAll();
-					JLabel title = new JLabel("SPACESHIPS!!!!");
-				    title.setFont(new Font("Papyrus",Font.PLAIN, 55));
-				    title.setHorizontalAlignment(SwingConstants.CENTER);
-					JPanel gamePanel = new BoardPanel(size, player, enemyPlayer);
-					gamePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-					getContentPane().add(title, BorderLayout.NORTH);
+				    
+					JPanel gamePanel = new GameGoingPanel(size, player, enemyPlayer);
+					
 					getContentPane().add(gamePanel);
 					pack();
 					getContentPane().revalidate();

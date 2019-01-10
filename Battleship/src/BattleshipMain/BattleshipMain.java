@@ -12,7 +12,7 @@ public class BattleshipMain
 		GameFrame frame = new GameFrame(size);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-	//	frame.setResizable(false);
+		frame.setResizable(false);
 		frame.pack();
 	}
 }

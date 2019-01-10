@@ -20,7 +20,7 @@ import javax.swing.border.Border;
 
 import BoatTypes.Boats;
 
-public class BoardPanel extends JPanel 
+public class GameGoingPanel extends JPanel 
 {
 	private JButton[][] buttons;
 	private JPanel[][] tiles;
@@ -29,9 +29,8 @@ public class BoardPanel extends JPanel
 	private int size;
 	private Player player1, player2;
 
-	public BoardPanel(int size, Player player1, Player player2)
+	public GameGoingPanel(int size, Player player1, Player player2)
 	{
-	//	super("Battleship Game By Damian Vaz");
 		this.size = size;
 		
 		// Buttons to be where the player wants to set the hit to enemy Board
@@ -80,18 +79,18 @@ public class BoardPanel extends JPanel
 		buttonsPanel.setPreferredSize(new Dimension(500, 500));
 		tilesPanel.setPreferredSize(new Dimension(500, 500));
 		
-		JPanel panel = new JPanel();
-		panel.setLayout(new BorderLayout(10, 10));
-		panel.add(buttonsPanel, BorderLayout.WEST);
-		panel.add(tilesPanel, BorderLayout.EAST);
-		/*
-		Box horizontalBox = Box.createHorizontalBox();
-		horizontalBox.createHorizontalGlue();
-		horizontalBox.add(buttonsPanel);
-		horizontalBox.add(tilesPanel);
-		*/
-
-		add(panel);
+		
+		setLayout(new BorderLayout(10, 10));
+		
+		JLabel title = new JLabel("SPACESHIPS!!!!");
+	    title.setFont(new Font("Papyrus",Font.PLAIN, 55));
+	    title.setHorizontalAlignment(SwingConstants.CENTER);
+	    
+	    add(title, BorderLayout.NORTH);
+		add(buttonsPanel, BorderLayout.WEST);
+		add(tilesPanel, BorderLayout.EAST);
+		setBorder(BorderFactory.createEmptyBorder(18, 12, 18, 12));
+		
 	}
 	
 	public void shootAtPlayer()
