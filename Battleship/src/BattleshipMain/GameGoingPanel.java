@@ -56,6 +56,7 @@ public class GameGoingPanel extends JPanel
 			{
 				buttons[i][j] = new JButton();
 				buttons[i][j].addActionListener(handler);
+				buttons[i][j].setBackground(Color.BLACK);
 				buttonsPanel.add(buttons[i][j]);
 
 				tiles[i][j] = new JPanel();
