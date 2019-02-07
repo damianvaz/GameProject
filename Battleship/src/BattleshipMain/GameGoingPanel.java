@@ -9,14 +9,11 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 
 import BoatTypes.Boats;
 
@@ -28,11 +25,14 @@ public class GameGoingPanel extends JPanel
 	private JPanel tilesPanel;
 	private int size;
 	private Player player1, player2;
+	private Color backgroundColor = Color.DARK_GRAY;
+	private Color mainColor = Color.GREEN;
+	LoadFonts loadFonts = new LoadFonts();
 
 	public GameGoingPanel(int size, Player player1, Player player2)
 	{
 		this.size = size;
-		
+		setBackground(backgroundColor);
 		// Buttons to be where the player wants to set the hit to enemy Board
 		buttons = new JButton[size][size];
 		buttonsPanel = new JPanel();
@@ -83,8 +83,10 @@ public class GameGoingPanel extends JPanel
 		setLayout(new BorderLayout(10, 10));
 		
 		JLabel title = new JLabel("SPACESHIPS!!!!");
-	    title.setFont(new Font("Papyrus",Font.PLAIN, 55));
-	    title.setHorizontalAlignment(SwingConstants.CENTER);
+		Font titleFont = loadFonts.getTitleFont(40f);
+		title.setFont(titleFont);
+		title.setForeground(mainColor);
+		title.setHorizontalAlignment(SwingConstants.CENTER);
 	    
 	    add(title, BorderLayout.NORTH);
 		add(buttonsPanel, BorderLayout.WEST);

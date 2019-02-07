@@ -4,18 +4,26 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.net.URL;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
 
 import BoatTypes.Boats;
 
@@ -30,25 +38,129 @@ public class GameFrame extends JFrame
 	Color tilesBackground = Color.BLACK;
 	Color okColor = Color.GREEN;
 	Color notOkColor = Color.RED;
+	Color backgroundColor = Color.DARK_GRAY;
+	Color mainColor = Color.GREEN;
+	Color secondaryColor = Color.CYAN;
+	Color thirdColor = new Color (147,112,219);
+	Color forthColor = new Color (0,100,0);
 	Board board;
 	int size;
 	Boats[] boats;
 	Player player;
 	boolean allBoatsSet = false;
 	int aircraftCarrierQtd, battleshipQtd, cruiserQtd, destroyerQtd, submarineQtd;
-	private final URL background = getClass().getResource("space.jpg");
+//	private final URL background = getClass().getResource("space.jpg");
 	JPanel mainPanel;
-	
+	JButton clearBoard, randomBoard, okButton;
+	LoadFonts loadFonts = new LoadFonts();
 	
 	public GameFrame(int size)
 	{	
 		super("Spaceships: A game by Damian Vaz");
 		this.size = size;
-		mainPanel = new JPanel();
 		board = new Board(size);
-		tilesPanel = boardPanel(size);
 		player = new Player(size);
 		boats = player.getBoats();
+		getBoatsQtd();
+		makeMainPanel();	
+	}
+	private void makeMainPanel()
+	{
+		mainPanel = new JPanel();
+		mainPanel.setBackground(backgroundColor);
+		tilesPanel = boardPanel(size);
+		
+		// Panel that shows the type of boats layout so that the user can set them on the board
+		JPanel boatsPanel = new JPanel();
+		boatsPanel.setBackground(backgroundColor);
+		boatsPanel.setPreferredSize(new Dimension(500,500));
+		boatsPanel.setLayout(new GridLayout(3, 2, 10, 10));
+		//making boats panel		
+	    Icon aircraftCarrierIcon = new ImageIcon(getClass().getResource("aircraftCarrier.png"));
+	    Icon battleshipIcon = new ImageIcon(getClass().getResource("battleship.png"));
+	    Icon cruiserIcon = new ImageIcon(getClass().getResource("cruiser.png"));
+	    Icon destroyerIcon = new ImageIcon(getClass().getResource("destroyer.png"));
+	    Icon submarineIcon = new ImageIcon(getClass().getResource("submarine.png"));
+	    
+	    BoatsMouseHandler boatsHandler = new BoatsMouseHandler();
+	    boatLabels[0] = makeBoatLabel(aircraftCarrierIcon, "SPACESHIP CARRIER", aircraftCarrierQtd, boatsHandler);
+	    boatLabels[1] = makeBoatLabel(battleshipIcon, "BATTLESHIP", battleshipQtd, boatsHandler);
+	    boatLabels[2] = makeBoatLabel(cruiserIcon, "CRUISER", cruiserQtd, boatsHandler);
+	    boatLabels[3] = makeBoatLabel(destroyerIcon, "DESTROYER", + destroyerQtd, boatsHandler);
+	    boatLabels[4] = makeBoatLabel(submarineIcon, "SUBSPACE", submarineQtd, boatsHandler);
+	    
+	    for (int i = 0; i < boatLabels.length; i++)
+	    {
+	    	boatsPanel.add(boatLabels[i]);
+	    	boatLabels[i].setBackground(backgroundColor);
+	    }
+	    
+	    JPanel buttonsPanel = new JPanel();
+	    buttonsPanel.setBackground(backgroundColor);
+	    buttonsPanel.setLayout(new GridBagLayout());
+	    GridBagConstraints constraints = new GridBagConstraints();
+	    constraints.gridwidth = GridBagConstraints.REMAINDER;
+	    constraints.anchor = GridBagConstraints.CENTER;
+	    constraints.fill = GridBagConstraints.HORIZONTAL;
+	    constraints.weighty = 1;
+	    
+	    Icon clearBoardIcon = new ImageIcon(getClass().getResource("clean.png"));
+	    Icon randomIcon = new ImageIcon(getClass().getResource("random.png"));
+	    
+	    clearBoard = new JButton();
+	    randomBoard = new JButton();
+	    
+	    randomBoard.setOpaque(false);
+        randomBoard.setContentAreaFilled(false);
+        Dimension randomButtonDimension = new Dimension(randomIcon.getIconWidth(), randomIcon.getIconHeight());
+        randomBoard.setPreferredSize(randomButtonDimension);
+        randomBoard.setBorderPainted(false);
+        
+        clearBoard.setOpaque(false);
+        clearBoard.setContentAreaFilled(false);
+        Dimension clearButtonDimension = new Dimension(clearBoardIcon.getIconWidth(), clearBoardIcon.getIconHeight());
+        clearBoard.setPreferredSize(clearButtonDimension);
+        clearBoard.setBorderPainted(false);
+	    
+	    clearBoard.setIcon(clearBoardIcon);
+	    randomBoard.setIcon(randomIcon);
+	    
+	    
+	    ButtonListener buttonHandler = new ButtonListener();
+	    clearBoard.addActionListener(buttonHandler);
+	    randomBoard.addActionListener(buttonHandler);
+	    
+	    buttonsPanel.add(clearBoard, constraints);
+	    buttonsPanel.add(randomBoard, constraints);
+	    boatsPanel.add(buttonsPanel);
+	    
+	    boatLabels[0].setBackground(selectedColor);
+	    
+	    JLabel title = new JLabel("Set your Board!");
+	    Font titleFont = loadFonts.getTitleFont(40f);
+	    title.setFont(titleFont);
+	    title.setForeground(mainColor);
+	    title.setHorizontalAlignment(SwingConstants.CENTER);
+	    okButton = new JButton("Ok");
+	    okButton.setEnabled(allBoatsSet);
+	    okButton.addActionListener(buttonHandler);
+	    
+	    JPanel northPanel = new JPanel();
+	    northPanel.setLayout(new BorderLayout());
+	    northPanel.setBackground(backgroundColor);
+	    northPanel.add(title, BorderLayout.CENTER);
+	    northPanel.add(okButton, BorderLayout.EAST);
+	    
+	    
+	    mainPanel.setLayout(new BorderLayout(15,15));
+	    mainPanel.add(northPanel, BorderLayout.NORTH);
+		mainPanel.add(tilesPanel, BorderLayout.CENTER);
+		mainPanel.add(boatsPanel, BorderLayout.EAST);
+		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		add(mainPanel);
+	}
+	private void getBoatsQtd()
+	{
 		aircraftCarrierQtd = 0;
 		battleshipQtd = 0;
 		cruiserQtd = 0;
@@ -85,53 +197,19 @@ public class GameFrame extends JFrame
 				}
 			}
 		}
-		
-		// Panel that shows the type of boats layout so that the user can set them on the board
-		JPanel boatsPanel = new JPanel();
-		boatsPanel.setPreferredSize(new Dimension(500,500));
-		boatsPanel.setLayout(new GridLayout(3, 2, 10, 10));
-		//making boats panel		
-	    Icon aircraftCarrierIcon = new ImageIcon(getClass().getResource("aircraftCarrier.png"));
-	    Icon battleshipIcon = new ImageIcon(getClass().getResource("battleship.png"));
-	    Icon cruiserIcon = new ImageIcon(getClass().getResource("cruiser.png"));
-	    Icon destroyerIcon = new ImageIcon(getClass().getResource("destroyer.png"));
-	    Icon submarineIcon = new ImageIcon(getClass().getResource("submarine.png"));
-	    
-	    BoatsMouseHandler boatsHandler = new BoatsMouseHandler();
-	    boatLabels[0] = makeBoatLabel(aircraftCarrierIcon, "SPACESHIP CARRIER", aircraftCarrierQtd, boatsHandler);
-	    boatLabels[1] = makeBoatLabel(battleshipIcon, "BATTLESHIP", battleshipQtd, boatsHandler);
-	    boatLabels[2] = makeBoatLabel(cruiserIcon, "CRUISER", cruiserQtd, boatsHandler);
-	    boatLabels[3] = makeBoatLabel(destroyerIcon, "DESTROYER", + destroyerQtd, boatsHandler);
-	    boatLabels[4] = makeBoatLabel(submarineIcon, "SUBSPACE", submarineQtd, boatsHandler);
-	    
-	    for (int i = 0; i < boatLabels.length; i++)
-	    {
-	    	boatsPanel.add(boatLabels[i]);
-	    }
-	    
-	    boatLabels[0].setBackground(selectedColor);
-	    boatsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
-	    
-	    JLabel title = new JLabel("Set your Board!");
-	    title.setFont(new Font("Papyrus",Font.PLAIN, 55));
-	    title.setHorizontalAlignment(SwingConstants.CENTER);
-	    
-	    mainPanel.setLayout(new BorderLayout(15,15));
-	    mainPanel.add(title, BorderLayout.NORTH);
-		mainPanel.add(tilesPanel, BorderLayout.CENTER);
-		mainPanel.add(boatsPanel, BorderLayout.EAST);
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		add(mainPanel);
 	}
 	public JLabel makeBoatLabel(Icon icon, String boatName, int boatQtd, BoatsMouseHandler handler)
 	{
 		JLabel boatLabel = new JLabel(icon, JLabel.CENTER);
 		boatLabel.setText("x" + boatQtd);
+		Font customFont = loadFonts.getMainFont(12f);
+		boatLabel.setFont(customFont);
+		boatLabel.setForeground(secondaryColor);
 	    boatLabel.setHorizontalTextPosition(JLabel.CENTER);
 	    boatLabel.setVerticalTextPosition(JLabel.BOTTOM);
 	    boatLabel.setOpaque(true);
 	    boatLabel.addMouseListener(handler);
-	    boatLabel.setBorder(BorderFactory.createTitledBorder(boatName));
+	    boatLabel.setBorder(BorderFactory.createTitledBorder(null, boatName, TitledBorder.LEFT, TitledBorder.TOP, customFont, secondaryColor));
 	    return boatLabel;
 	}
 	public JPanel boardPanel(int size)
@@ -139,8 +217,9 @@ public class GameFrame extends JFrame
 		JPanel tilesPanel = new JPanel();
 		tiles = new Tiles[size][size];
 		tilesPanel.setPreferredSize(new Dimension(500, 500));
-		GridLayout layout = new GridLayout(size, size, 1, 1);
+		GridLayout layout = new GridLayout(size, size, 0, 0);
 		tilesPanel.setLayout(layout);
+		tilesPanel.setBorder(BorderFactory.createLineBorder(thirdColor, 5));
 		TilesMouseHandler tilesHandler = new TilesMouseHandler();
 		for (int i = 0; i < size; i++) 
 		{
@@ -148,16 +227,72 @@ public class GameFrame extends JFrame
 			{
 				tiles[i][j] = new Tiles(i,j);
 				tiles[i][j].addMouseListener(tilesHandler);
-				
-				
-				tiles[i][j].setBorder(BorderFactory.createLineBorder(null, 1));
+			
+				if(board.board[i][j] != ' ')
+				{
+					Boats boat = player.getBoat(i, j);
+					tiles[i][j].setBackground(boat.color);
+				}
+		
+				tiles[i][j].setBorder(BorderFactory.createLineBorder(forthColor, 1));
 				tilesPanel.add(tiles[i][j]);
 			}
 		}
 		return tilesPanel;
 	}
 	
-	
+	private class ButtonListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			JButton source = (JButton) e.getSource();
+			if (source.equals(clearBoard))
+			{
+				board = new Board(size);
+				player = new Player(size);
+				allBoatsSet = false;
+				boats = player.boats;
+				
+				getBoatsQtd();
+				getContentPane().removeAll();
+				makeMainPanel();
+				getContentPane().add(mainPanel);
+				getContentPane().revalidate();
+			}
+			else if (source.equals(randomBoard))
+			{
+				player = new Player(size);
+				player.setRandomBoard();
+				boats = player.getBoats();
+				board = player.board;
+				aircraftCarrierQtd = 0;
+				battleshipQtd = 0;
+				cruiserQtd = 0;
+				destroyerQtd = 0;
+				submarineQtd = 0;
+				allBoatsSet = true;
+				okButton.setEnabled(true);
+				getContentPane().removeAll();
+				makeMainPanel();
+				getContentPane().add(mainPanel);
+				getContentPane().revalidate();
+			}
+			else
+			{
+				Player enemyPlayer = new Player(size);
+				player.board = board;
+				enemyPlayer.setRandomBoard();
+				
+				getContentPane().removeAll();
+			    
+				JPanel gamePanel = new GameGoingPanel(size, player, enemyPlayer);
+				
+				getContentPane().add(gamePanel);
+				pack();
+			}
+		}
+	}
 	private class TilesMouseHandler implements MouseListener
 	{
 		private Boats getBoatSelected()
@@ -381,7 +516,7 @@ public class GameFrame extends JFrame
 			Tiles tile = (Tiles) e.getSource();
 			
 			if (e.getButton() == MouseEvent.BUTTON1 && !allBoatsSet)
-			{	
+			{
 				if (board.isValidPlay(boat))
 				{
 					boat.setIsBoatSet(true);
@@ -429,22 +564,8 @@ public class GameFrame extends JFrame
 				}
 				if (aircraftCarrierQtd == 0 && battleshipQtd == 0 && cruiserQtd == 0 && destroyerQtd == 0 && submarineQtd == 0)
 				{
-					
 					allBoatsSet = true;
-					Player enemyPlayer = new Player(size);
-					player.board = board;
-					enemyPlayer.setRandomBoard();
-					
-					getContentPane().removeAll();
-				    
-					JPanel gamePanel = new GameGoingPanel(size, player, enemyPlayer);
-					
-					getContentPane().add(gamePanel);
-					pack();
-					getContentPane().revalidate();
-					getContentPane().repaint();
-
-				//	frame.add(new BattleshipMain());
+					okButton.setEnabled(true);
 				}
 			}
 			if ( e.getButton() == MouseEvent.BUTTON3 && !allBoatsSet)
@@ -566,4 +687,5 @@ public class GameFrame extends JFrame
 			}
 		}
 	}
+
 }
