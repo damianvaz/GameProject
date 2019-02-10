@@ -25,9 +25,8 @@ public class GameGoingPanel extends JPanel
 	private JPanel tilesPanel;
 	private int size;
 	private Player player1, player2;
-	private Color backgroundColor = Color.DARK_GRAY;
-	private Color mainColor = Color.GREEN;
-	LoadFonts loadFonts = new LoadFonts();
+	private Color backgroundColor = ColorScheme.backgroundColor;
+	private Color mainColor = ColorScheme.mainColor;
 
 	public GameGoingPanel(int size, Player player1, Player player2)
 	{
@@ -84,7 +83,7 @@ public class GameGoingPanel extends JPanel
 		setLayout(new BorderLayout(10, 10));
 		
 		JLabel title = new JLabel("SPACESHIPS!!!!");
-		Font titleFont = loadFonts.getTitleFont(40f);
+		Font titleFont = LoadFonts.getTitleFont(40f);
 		title.setFont(titleFont);
 		title.setForeground(mainColor);
 		title.setHorizontalAlignment(SwingConstants.CENTER);

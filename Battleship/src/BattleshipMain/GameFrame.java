@@ -4,16 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;
-import java.io.InputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -25,6 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
+import com.sun.javafx.scene.control.skin.ColorPalette;
+
 import BoatTypes.Boats;
 
 public class GameFrame extends JFrame
@@ -33,16 +33,16 @@ public class GameFrame extends JFrame
 	JLabel[] boatLabels = new JLabel[5];
 	JPanel[][] tiles;
 	JPanel tilesPanel;
-	Color hover = new Color (135,206,250);
-	Color selectedColor = new Color(100,149,237);
-	Color tilesBackground = Color.BLACK;
-	Color okColor = Color.GREEN;
-	Color notOkColor = Color.RED;
-	Color backgroundColor = Color.DARK_GRAY;
-	Color mainColor = Color.GREEN;
-	Color secondaryColor = Color.CYAN;
-	Color thirdColor = new Color (147,112,219);
-	Color forthColor = new Color (0,100,0);
+	Color hover = ColorScheme.hover;
+	Color selectedColor = ColorScheme.selectedColor;
+	Color tilesBackground = ColorScheme.tilesBackground;
+	Color okColor = ColorScheme.okColor;
+	Color notOkColor = ColorScheme.notOkColor;
+	Color backgroundColor = ColorScheme.backgroundColor;
+	Color mainColor = ColorScheme.mainColor;
+	Color secondaryColor = ColorScheme.secondaryColor;
+	Color thirdColor = ColorScheme.thirdColor;
+	Color forthColor = ColorScheme.forthColor;
 	Board board;
 	int size;
 	Boats[] boats;
@@ -52,7 +52,10 @@ public class GameFrame extends JFrame
 //	private final URL background = getClass().getResource("space.jpg");
 	JPanel mainPanel;
 	JButton clearBoard, randomBoard, okButton;
-	LoadFonts loadFonts = new LoadFonts();
+	Icon clearBoardIcon = new ImageIcon(getClass().getResource("/resources/clean.png"));
+    Icon randomIcon = new ImageIcon(getClass().getResource("/resources/random.png"));
+    Icon hoverClearBoardIcon = new ImageIcon(getClass().getResource("/resources/cleanHover.png"));
+    Icon hoverRandomIcon = new ImageIcon(getClass().getResource("/resources/randomHover.png"));
 	
 	public GameFrame(int size)
 	{	
@@ -76,11 +79,11 @@ public class GameFrame extends JFrame
 		boatsPanel.setPreferredSize(new Dimension(500,500));
 		boatsPanel.setLayout(new GridLayout(3, 2, 10, 10));
 		//making boats panel		
-	    Icon aircraftCarrierIcon = new ImageIcon(getClass().getResource("aircraftCarrier.png"));
-	    Icon battleshipIcon = new ImageIcon(getClass().getResource("battleship.png"));
-	    Icon cruiserIcon = new ImageIcon(getClass().getResource("cruiser.png"));
-	    Icon destroyerIcon = new ImageIcon(getClass().getResource("destroyer.png"));
-	    Icon submarineIcon = new ImageIcon(getClass().getResource("submarine.png"));
+	    Icon aircraftCarrierIcon = new ImageIcon(getClass().getResource("/resources/aircraftCarrier.png"));
+	    Icon battleshipIcon = new ImageIcon(getClass().getResource("/resources/battleship.png"));
+	    Icon cruiserIcon = new ImageIcon(getClass().getResource("/resources/cruiser.png"));
+	    Icon destroyerIcon = new ImageIcon(getClass().getResource("/resources/destroyer.png"));
+	    Icon submarineIcon = new ImageIcon(getClass().getResource("/resources/submarine.png"));
 	    
 	    BoatsMouseHandler boatsHandler = new BoatsMouseHandler();
 	    boatLabels[0] = makeBoatLabel(aircraftCarrierIcon, "SPACESHIP CARRIER", aircraftCarrierQtd, boatsHandler);
@@ -104,9 +107,6 @@ public class GameFrame extends JFrame
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.weighty = 1;
 	    
-	    Icon clearBoardIcon = new ImageIcon(getClass().getResource("clean.png"));
-	    Icon randomIcon = new ImageIcon(getClass().getResource("random.png"));
-	    
 	    clearBoard = new JButton();
 	    randomBoard = new JButton();
 	    
@@ -125,6 +125,10 @@ public class GameFrame extends JFrame
 	    clearBoard.setIcon(clearBoardIcon);
 	    randomBoard.setIcon(randomIcon);
 	    
+	    ButtonMouseListener buttonMouseListener = new ButtonMouseListener();
+	    clearBoard.addMouseListener(buttonMouseListener);
+	    randomBoard.addMouseListener(buttonMouseListener);
+	    
 	    
 	    ButtonListener buttonHandler = new ButtonListener();
 	    clearBoard.addActionListener(buttonHandler);
@@ -137,7 +141,7 @@ public class GameFrame extends JFrame
 	    boatLabels[0].setBackground(selectedColor);
 	    
 	    JLabel title = new JLabel("Set your Board!");
-	    Font titleFont = loadFonts.getTitleFont(40f);
+	    Font titleFont = LoadFonts.getTitleFont(40f);
 	    title.setFont(titleFont);
 	    title.setForeground(mainColor);
 	    title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -202,7 +206,7 @@ public class GameFrame extends JFrame
 	{
 		JLabel boatLabel = new JLabel(icon, JLabel.CENTER);
 		boatLabel.setText("x" + boatQtd);
-		Font customFont = loadFonts.getMainFont(12f);
+		Font customFont = LoadFonts.getMainFont(12f);
 		boatLabel.setFont(customFont);
 		boatLabel.setForeground(secondaryColor);
 	    boatLabel.setHorizontalTextPosition(JLabel.CENTER);
@@ -688,4 +692,34 @@ public class GameFrame extends JFrame
 		}
 	}
 
+	private class ButtonMouseListener extends MouseAdapter
+	{
+		@Override
+		public void mouseEntered(MouseEvent e)
+		{
+			JButton source = (JButton) e.getSource();
+			if (source.equals(randomBoard))
+			{
+				source.setIcon(hoverRandomIcon);
+			}
+			else
+			{
+				source.setIcon(hoverClearBoardIcon);
+			}
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e)
+		{
+			JButton source = (JButton) e.getSource();
+			if (source.equals(randomBoard))
+			{
+				source.setIcon(randomIcon);
+			}
+			else
+			{
+				source.setIcon(clearBoardIcon);
+			}
+		}
+	}
 }
