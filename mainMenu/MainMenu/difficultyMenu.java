@@ -73,7 +73,7 @@ public class difficultyMenu extends JPanel
 			{
 				BattleshipMain battleship = new BattleshipMain(10);
 			}
-			else if (buttonPressed.equals(easyButton))
+			else if (buttonPressed.equals(mediumButton))
 			{
 				BattleshipMain battleship = new BattleshipMain(15);
 			}

@@ -72,7 +72,6 @@ public class GameFrame extends JFrame
 		mainPanel = new JPanel();
 		mainPanel.setBackground(backgroundColor);
 		tilesPanel = boardPanel(size);
-		
 		// Panel that shows the type of boats layout so that the user can set them on the board
 		JPanel boatsPanel = new JPanel();
 		boatsPanel.setBackground(backgroundColor);
