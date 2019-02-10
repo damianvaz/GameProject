@@ -5,8 +5,9 @@ import java.awt.FontFormatException;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class LoadFonts
+public abstract class LoadFonts
 {
+	/*
 	private Font titleFont;
 	private Font mainFont;
 	
@@ -38,13 +39,40 @@ public class LoadFonts
 			e.printStackTrace();
 		}
 	}
-
-	public Font getMainFont(float size)
+*/
+	public static Font getMainFont(float size)
 	{
+		// load PressStart2P-Regular Font
+		Font mainFont = null;
+		InputStream is = GameFrame.class.getResourceAsStream("/resources/PressStart2P-Regular.ttf");
+		try
+		{
+			mainFont = Font.createFont(Font.TRUETYPE_FONT, is);
+		} catch (FontFormatException e)
+		{
+			e.printStackTrace();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		 		
 		return mainFont.deriveFont(size);
 	}
-	public Font getTitleFont(float size)
+	public static Font getTitleFont(float size)
 	{
+		Font titleFont = null;
+		InputStream is = GameFrame.class.getResourceAsStream("/resources/PressStart2P-Regular.ttf");
+ 		try
+ 		{
+ 			titleFont = Font.createFont(Font.TRUETYPE_FONT, is);
+ 		} catch (FontFormatException e)
+ 		{
+ 			e.printStackTrace();
+ 		} catch (IOException e)
+ 		{
+ 			e.printStackTrace();
+ 		}
+ 		
 		return titleFont.deriveFont(size);
 	}
 }
