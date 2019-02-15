@@ -23,8 +23,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
-import com.sun.javafx.scene.control.skin.ColorPalette;
-
 import BoatTypes.Boats;
 
 public class GameFrame extends JFrame
@@ -51,11 +49,12 @@ public class GameFrame extends JFrame
 	int aircraftCarrierQtd, battleshipQtd, cruiserQtd, destroyerQtd, submarineQtd;
 //	private final URL background = getClass().getResource("space.jpg");
 	JPanel mainPanel;
-	JButton clearBoard, randomBoard, okButton;
+	JButton clearBoard, randomBoard, goButton;
 	Icon clearBoardIcon = new ImageIcon(getClass().getResource("/resources/clean.png"));
     Icon randomIcon = new ImageIcon(getClass().getResource("/resources/random.png"));
     Icon hoverClearBoardIcon = new ImageIcon(getClass().getResource("/resources/cleanHover.png"));
     Icon hoverRandomIcon = new ImageIcon(getClass().getResource("/resources/randomHover.png"));
+    Icon goButtonIcon = new ImageIcon(getClass().getResource("/resources/goResized.gif"));
 	
 	public GameFrame(int size)
 	{	
@@ -123,11 +122,10 @@ public class GameFrame extends JFrame
 	    
 	    clearBoard.setIcon(clearBoardIcon);
 	    randomBoard.setIcon(randomIcon);
-	    
-	    ButtonMouseListener buttonMouseListener = new ButtonMouseListener();
-	    clearBoard.addMouseListener(buttonMouseListener);
-	    randomBoard.addMouseListener(buttonMouseListener);
-	    
+	    clearBoard.setRolloverIcon(hoverClearBoardIcon);
+	    randomBoard.setRolloverIcon(hoverRandomIcon);
+	    clearBoard.setPressedIcon(hoverClearBoardIcon);
+	    randomBoard.setPressedIcon(hoverRandomIcon);
 	    
 	    ButtonListener buttonHandler = new ButtonListener();
 	    clearBoard.addActionListener(buttonHandler);
@@ -144,15 +142,31 @@ public class GameFrame extends JFrame
 	    title.setFont(titleFont);
 	    title.setForeground(mainColor);
 	    title.setHorizontalAlignment(SwingConstants.CENTER);
-	    okButton = new JButton("Ok");
-	    okButton.setEnabled(allBoatsSet);
-	    okButton.addActionListener(buttonHandler);
+	    goButton = new JButton();
+	    if(allBoatsSet)
+	    {
+	    	goButton.setOpaque(true);
+	        goButton.setContentAreaFilled(true);
+	        goButton.setBorder(BorderFactory.createLineBorder(ColorScheme.fifthColor, 3));
+	    }
+	    else
+	    {
+	    	goButton.setOpaque(false);
+	        goButton.setContentAreaFilled(false);
+	    }
+        Dimension goButtonDimension = new Dimension(goButtonIcon.getIconWidth(), goButtonIcon.getIconHeight());
+        goButton.setPreferredSize(goButtonDimension);
+        goButton.setBackground(ColorScheme.secondaryColor);
+	    goButton.setEnabled(allBoatsSet);
+	    goButton.setIcon(goButtonIcon);
+	    goButton.addActionListener(buttonHandler);
+	    
 	    
 	    JPanel northPanel = new JPanel();
 	    northPanel.setLayout(new BorderLayout());
 	    northPanel.setBackground(backgroundColor);
 	    northPanel.add(title, BorderLayout.CENTER);
-	    northPanel.add(okButton, BorderLayout.EAST);
+	    northPanel.add(goButton, BorderLayout.EAST);
 	    
 	    
 	    mainPanel.setLayout(new BorderLayout(15,15));
@@ -218,6 +232,7 @@ public class GameFrame extends JFrame
 	public JPanel boardPanel(int size)
 	{
 		JPanel tilesPanel = new JPanel();
+		tilesPanel.setBackground(thirdColor);
 		tiles = new Tiles[size][size];
 		tilesPanel.setPreferredSize(new Dimension(500, 500));
 		GridLayout layout = new GridLayout(size, size, 0, 0);
@@ -275,7 +290,6 @@ public class GameFrame extends JFrame
 				destroyerQtd = 0;
 				submarineQtd = 0;
 				allBoatsSet = true;
-				okButton.setEnabled(true);
 				getContentPane().removeAll();
 				makeMainPanel();
 				getContentPane().add(mainPanel);
@@ -568,7 +582,10 @@ public class GameFrame extends JFrame
 				if (aircraftCarrierQtd == 0 && battleshipQtd == 0 && cruiserQtd == 0 && destroyerQtd == 0 && submarineQtd == 0)
 				{
 					allBoatsSet = true;
-					okButton.setEnabled(true);
+					goButton.setOpaque(true);
+			        goButton.setContentAreaFilled(true);
+					goButton.setEnabled(true);
+					goButton.setBorder(BorderFactory.createLineBorder(ColorScheme.fifthColor, 3));
 				}
 			}
 			if ( e.getButton() == MouseEvent.BUTTON3 && !allBoatsSet)
@@ -687,37 +704,6 @@ public class GameFrame extends JFrame
 			else
 			{
 				return false;
-			}
-		}
-	}
-
-	private class ButtonMouseListener extends MouseAdapter
-	{
-		@Override
-		public void mouseEntered(MouseEvent e)
-		{
-			JButton source = (JButton) e.getSource();
-			if (source.equals(randomBoard))
-			{
-				source.setIcon(hoverRandomIcon);
-			}
-			else
-			{
-				source.setIcon(hoverClearBoardIcon);
-			}
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e)
-		{
-			JButton source = (JButton) e.getSource();
-			if (source.equals(randomBoard))
-			{
-				source.setIcon(randomIcon);
-			}
-			else
-			{
-				source.setIcon(clearBoardIcon);
 			}
 		}
 	}

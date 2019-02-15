@@ -35,6 +35,7 @@ public class GameGoingPanel extends JPanel
 		// Buttons to be where the player wants to set the hit to enemy Board
 		buttons = new JButton[size][size];
 		buttonsPanel = new JPanel();
+		buttonsPanel.setBackground(ColorScheme.thirdColor);
 
 		this.player1 = player1;
 		this.player2 = player2;
@@ -42,7 +43,8 @@ public class GameGoingPanel extends JPanel
 		// tiles are my board
 		tiles = new JPanel[size][size];
 		tilesPanel = new JPanel();
-
+		
+		
 		GridLayout layout = new GridLayout(size, size, 0, 0);
 		buttonsPanel.setLayout(layout);
 		tilesPanel.setLayout(layout);
@@ -56,6 +58,7 @@ public class GameGoingPanel extends JPanel
 				buttons[i][j] = new JButton();
 				buttons[i][j].addActionListener(handler);
 				buttons[i][j].setBackground(Color.BLACK);
+			//	buttons[i][j].setBorderPainted(false);;
 				buttonsPanel.add(buttons[i][j]);
 
 				tiles[i][j] = new JPanel();
@@ -74,8 +77,10 @@ public class GameGoingPanel extends JPanel
 			}
 		}
 		// Setting Boarders
-		tilesPanel.setBackground(null);
 		
+		tilesPanel.setBorder(BorderFactory.createLineBorder(ColorScheme.okColor));
+		
+		tilesPanel.setBackground(null);		
 		buttonsPanel.setPreferredSize(new Dimension(500, 500));
 		tilesPanel.setPreferredSize(new Dimension(500, 500));
 		
