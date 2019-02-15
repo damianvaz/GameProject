@@ -71,7 +71,7 @@ public class GameFrame extends JFrame
 		mainPanel = new JPanel();
 		mainPanel.setBackground(backgroundColor);
 		tilesPanel = boardPanel(size);
-		// Panel that shows the type of boats layout so that the user can set them on the board
+		// Panel that shows the type of boats so that the user can set them on the board
 		JPanel boatsPanel = new JPanel();
 		boatsPanel.setBackground(backgroundColor);
 		boatsPanel.setPreferredSize(new Dimension(500,500));
@@ -137,11 +137,13 @@ public class GameFrame extends JFrame
 	    
 	    boatLabels[0].setBackground(selectedColor);
 	    
+	    // Making JLabel yo go on mainPanel north
 	    JLabel title = new JLabel("Set your Board!");
 	    Font titleFont = LoadFonts.getTitleFont(40f);
 	    title.setFont(titleFont);
 	    title.setForeground(mainColor);
 	    title.setHorizontalAlignment(SwingConstants.CENTER);
+	    // making Go button, if all the boats are set, it becomes enable and the user can click on it to fo to the GameGoingPanel
 	    goButton = new JButton();
 	    if(allBoatsSet)
 	    {
@@ -161,14 +163,14 @@ public class GameFrame extends JFrame
 	    goButton.setIcon(goButtonIcon);
 	    goButton.addActionListener(buttonHandler);
 	    
-	    
+	    // Making Panel that contains the JLabel and the Go Button
 	    JPanel northPanel = new JPanel();
 	    northPanel.setLayout(new BorderLayout());
 	    northPanel.setBackground(backgroundColor);
 	    northPanel.add(title, BorderLayout.CENTER);
 	    northPanel.add(goButton, BorderLayout.EAST);
 	    
-	    
+	    // Setting and adding components to mainPanel
 	    mainPanel.setLayout(new BorderLayout(15,15));
 	    mainPanel.add(northPanel, BorderLayout.NORTH);
 		mainPanel.add(tilesPanel, BorderLayout.CENTER);
