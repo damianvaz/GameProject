@@ -2,9 +2,7 @@
 A basic game that has miniGames for the users to choose from.
 
 # Class Diagram UML
-<p align="center">
-  <img src="/images/classDiagramUML.png"/>
-</p>
+
 ![Image Not Found](images/classDiagramUML.png)
 
 # Games 
